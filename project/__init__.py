@@ -24,7 +24,7 @@ postgres_str = 'postgresql+psycopg2://{username}:{password}@{ipaddress}:{port}/{
 
 app = Flask(__name__)
 csrf = CsrfProtect(app)
-app.config.from_pyfile("upload_to_s3/config.py")
+
 # csrf.init_app(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/shulun.chen/Documents/school_project/MSDS-603/back_end/project/database.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = postgres_str
@@ -32,6 +32,8 @@ app.config['SECRET_KEY'] = '1234567890'
 app.config['WTF_CSRF_SECRET_KEY'] = '1234567890'
 # app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 # app.config['SERVER_NAME'] = 'local.dev:5000'
+
+app.config.from_pyfile("upload_to_s3/config.py")
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
