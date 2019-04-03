@@ -56,7 +56,7 @@
                         </div>
                         <div class="card-body">
                             <form name="my-form" method="POST">
-                                {{ form.csrf_token }}
+                                {{ form.hidden_tag() }}
                                 <div class="form-group row">
                                     {{ form.username.label(class_="col-md-4 col-form-label text-md-right") }}
                                     <div class="col-md-6">
