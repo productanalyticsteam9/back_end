@@ -10,7 +10,7 @@
     <h1>Upload</h1>
 
     <form action="" method='POST' enctype='multipart/form-data'>
-        {{ form.hidden_tag() }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         {{ form.upload.label }}
         <br></br>
         {{ form.upload }}
