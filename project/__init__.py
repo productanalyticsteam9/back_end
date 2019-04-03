@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CsrfProtect
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 import os
@@ -23,7 +23,7 @@ postgres_str = 'postgresql+psycopg2://{username}:{password}@{ipaddress}:{port}/{
 )
 
 app = Flask(__name__)
-csrf = CSRFProtect(app)
+csrf = CsrfProtect(app)
 # csrf.init_app(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/shulun.chen/Documents/school_project/MSDS-603/back_end/project/database.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = postgres_str
