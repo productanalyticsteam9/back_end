@@ -1,5 +1,6 @@
 import boto3, botocore
-from .server import app
+# from .server import app
+from .. import app
 
 ALLOWED_EXTENSIONS = set(['txt', 'md', 'markdown', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -14,15 +15,16 @@ s3 = boto3.client(
     region_name = 'us-west-2'
 )
 
-def upload_file_to_s3(file, bucket_name, acl='public-read'):
+def upload_file_to_s3(file, bucket_name, folder='user', acl='public-read'):
     """
     Docs: http://boto3.readthedocs.io/en/latest/guides/s3.html
     """
     try:
+        file_path = "{}/{}".format(folder, file.filename)
         s3.upload_fileobj(
             file,
             bucket_name,
-            file.filename,
+            file_path,
             ExtraArgs = {
                 # 'ACL': acl,
                 'ContentType': file.content_type
@@ -34,4 +36,4 @@ def upload_file_to_s3(file, bucket_name, acl='public-read'):
 
     
 
-    return "{}{}".format(app.config['S3_LOCATION'], file.filename)
+    return "{}{}".format(app.config['S3_LOCATION'], file_path)

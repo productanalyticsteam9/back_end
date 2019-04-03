@@ -6,11 +6,12 @@ from uuid import uuid4
 
 from .. import app, db
 from ..models import User
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, UploadForm
+from ..upload_to_s3.helper import upload_file_to_s3
+from werkzeug.utils import secure_filename 
 
 
 users_blueprint = Blueprint('users', __name__)
-
 
 @users_blueprint.route("/")
 def index():
@@ -89,3 +90,25 @@ def logout():
     logout_user()
     flash("Goodbye and look forward to see you next time!", 'success')
     return redirect(url_for("users.login"))
+
+
+@users_blueprint.route("/upload", methods=["GET", "POST"])
+@login_required
+def upload():
+    # if 'user_file' not in request.files:
+    #     return "Please select a file to upload."
+    
+    user = current_user
+    form = UploadForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            return_file = form.upload.data
+            if return_file:
+                return_file.filename = secure_filename(return_file.filename)
+                output = upload_file_to_s3(return_file, app.config['S3_BUCKET'], folder=user.uuid)
+                return output, 200
+            else:
+                return redirect(url_for("users.upload"))
+        else:
+            flash("Sorry, your file type is not allowed.", 'info')
+    return render_template('upload.html', form=form)

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.config.from_object("upload_to_s3.config")
+app.config.from_pyfile("config.py")
 
 from .helper import allowed_file, upload_file_to_s3
 

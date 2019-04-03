@@ -30,6 +30,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = postgres_str
 app.config['SECRET_KEY'] = '1234567890'
 # app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 # app.config['SERVER_NAME'] = 'local.dev:5000'
+
+app.config.from_pyfile("upload_to_s3/config.py")
+
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Upload</title>
+    <link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/magnifying-glass-favicon.png') }}" />
+</head>
+<bodu>
+
+    <h1>Upload</h1>
+
+    <form action="" method='POST' enctype='multipart/form-data'>
+        {{ form.csrf_token }}
+        {{ form.upload.label }}
+        <br></br>
+        {{ form.upload }}
+        <!-- <input type='file' name='user_file'> -->
+        <br></br>
+        <button type='submit'>Upload</button>
+    </form>
+
+    <br />
+    <div class="container">
+        <div class="content">
+            <!-- flash messages-->
+            {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+            <div class="alert alert-info alert-admissible" role="alert">{{ info_message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</bodu>
+</html>
