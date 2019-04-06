@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Images -->
+    <link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/magnifying-glass-favicon.png') }}" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Customized CSS -->
+    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='styles/register_style.css') }}">
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+    <title>Website Registration</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+    <div class="container">
+    <!-- <a class="navbar-brand" href="#"></a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Back to Login</a>
+            </li>
+        </ul>
+
+    </div>
+    </div>
+</nav>
+
+<main class="my-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><strong>Registration</strong></h5>
+                        </div>
+                        <div class="card-body">
+                            <form name="my-form" method="POST">
+                                {{ form.csrf_token }}
+                                <div class="form-group row">
+                                    {{ form.username.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-md-6">
+                                        {{ form.username(class_="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form.email.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-md-6">
+                                        {{ form.email(class_="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form.age.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-md-6">
+                                        {{ form.age(class_="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form.gender.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-sm-8">
+                                        {{ form.gender }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form.city.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-sm-6">
+                                        {{ form.city(class_="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form.country.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-md-6">
+                                        {{ form.country(class_="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form.password.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-md-6">
+                                        {{ form.password(class_="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form.confirm.label(class_="col-md-4 col-form-label text-md-right") }}
+                                    <div class="col-md-6">
+                                        {{ form.confirm(class_="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Register
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</main>
+
+<div class="container">
+    <div class="content">
+        <!-- flash messages-->
+        {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+        <div class="alert alert-danger alert-dismissible" role="alert">{{ error_message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+        {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+        <div class="alert alert-success alert-dismissible" role="alert">{{ success_message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+        {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+        <div class="alert alert-info alert-admissible" role="alert">{{ info_message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help you A/B Test</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+<link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/magnifying-glass-favicon.png') }}" />
+</head>
+<body>
+
+<!-- Modal HTML -->
+
+	<div class="modal-dialog modal-login">
+		<div class="modal-content">
+			<div class="modal-header">
+                <img src="{{ url_for('static',filename='img/img_avatar.png') }}" alt="Avatar", class="avatar">
+				<h4 class="modal-title">User Login</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form method="POST">
+                    {{ form.csrf_token }}
+					<div class="form-group">
+						{{ form.username(class_="form-control", placeholder="Username", required="required") }}
+					</div>
+					<div class="form-group">
+						{{ form.password(class_="form-control", placeholder="Password", required="required") }}
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-6">
+								<button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
+							</div>
+							<div class="col-xs-6">
+								<a class="btn btn-primary btn-lg btn-block register-btn" href="/register">Register</a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<a href="#">Forgot Password?</a>
+			</div>
+        </div>
+        
+        <br />
+        <div class="container">
+            <div class="content">
+                <!-- flash messages-->
+                {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+                <div class="alert alert-danger alert-dismissible col-md-4" role="alert">{{ error_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+        
+                {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+                <div class="alert alert-success alert-dismissible col-md-4" role="alert">{{ success_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+        
+                {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+                <div class="alert alert-info alert-admissible col-md-4" role="alert">{{ info_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
