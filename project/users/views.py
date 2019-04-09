@@ -56,9 +56,12 @@ def register():
                 country_code = form.country.data
                 browser = request.user_agent.browser
 
-                check_uname = User.query.filter_by(username=uname).first()
-                if check_uname is not None:
-                    flash("Sorry, username ({}) already exists.".format(uname), 'error')
+                # check_uname = User.query.filter_by(username=uname).first()
+                user_count = User.query.filter_by(username=uname).count() + \
+                             User.query.filter_by(email=mail).count()
+                # if check_uname is not None:
+                if user_count > 0:
+                    flash("Sorry, username ({}) or email ({}) already exists.".format(uname, mail), 'error')
                 else:
                     register = User(username=uname, email=mail, plain_password=passw)
                     register.uuid = str(uuid4())
