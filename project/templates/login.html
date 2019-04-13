@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
-<link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/magnifying-glass-favicon.png') }}" />
+<link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/logo.png') }}" />
 </head>
 <body>
 
@@ -22,8 +22,10 @@
 		<div class="modal-content">
 			<div class="modal-header">
                 <img src="{{ url_for('static',filename='img/img_avatar.png') }}" alt="Avatar", class="avatar">
-				<h4 class="modal-title">User Login</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">User Login</h4>
+                <a href="/">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </a>
 			</div>
 			<div class="modal-body">
 				<form method="POST">
