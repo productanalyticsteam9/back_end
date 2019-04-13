@@ -18,6 +18,12 @@ def index():
     return render_template("index.html")
 
 
+@users_blueprint.route("/user_home")
+@login_required
+def home():
+    return render_template("index_old.html")
+
+
 @users_blueprint.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm(request.form)
@@ -35,7 +41,7 @@ def login():
                 db.session.commit()
                 login_user(user)
                 flash("Thanks for logging in, {}!".format(current_user.username), 'success')
-                return redirect(url_for("users.index"))
+                return redirect(url_for("users.home"))
             else:
                 flash("ERROR! Incorrect login credentials.", 'error')
     return render_template("login.html", form=form)
@@ -79,7 +85,7 @@ def register():
                 db.session.rollback()
                 flash(e, 'error')
         else:
-            flash("Sorry, your credentials do not conform to our standards, please reset them.", 'info')
+            flash("Sorry, the information you have entered does not conform to our standards, please reset them.", 'info')
     return render_template("register.html", form=form)
 
 
@@ -91,7 +97,7 @@ def logout():
     db.session.add(user)
     db.session.commit()
     logout_user()
-    flash("Goodbye and look forward to see you next time!", 'success')
+    flash("Goodbye and look forward to seeing you next time!", 'success')
     return redirect(url_for("users.login"))
 
 
