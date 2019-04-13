@@ -1,37 +1,37 @@
-create schema if not exists appdata;
+CREATE SCHEMA IF NOT EXISTS "appdata";
 
-CREATE TABLE IF NOT EXISTS appdata.user
+CREATE TABLE IF NOT EXISTS "appdata.user"
 (
-  user_id bigserial NOT NULL 
-  , email varchar(50) UNIQUE NOT NULL
-  , password varchar(10) NOT NULL
-  , name varchar(30) NOT NULL
-  , age smallint 
-  , gender varchar(3)
-  , city varchar(20)
-  , country varchar(20)
-  , browser varchar(10)
-  , is_developer boolean
-  , created_on timestamp without time zone NOT NULL
-  , last_login timestamp without time zone NOT NULL
-  , PRIMARY KEY (user_id)
-
+  uuid VARCHAR(100) NOT NULL
+  , username VARCHAR(80) NOT NULL
+  , email VARCHAR(100) UNIQUE NOT NULL
+  , p_password VARCHAR NOT NULL
+  , age SMALLINT
+  , gender VARCHAR(3)
+  , city VARCHAR(20)
+  , country_code VARCHAR(20)
+  , browser VARCHAR(10)
+  , is_developer BOOLEAN
+  , created_on TIMESTAMP WITHOUT TIME ZONE NOT NULL
+  , last_login TIMESTAMP WITHOUT TIME ZONE NOT NULL
+  , authenticated BOOLEAN
+  , PRIMARY KEY (uuid, username)
  );
 
 
-CREATE SEQUENCE if not exists poll_image_id_seq;
+-- CREATE SEQUENCE if not exists poll_image_id_seq;
 
-CREATE TABLE IF NOT EXISTS appdata.poll 
+CREATE TABLE IF NOT EXISTS "appdata.poll" 
 (
-    poll_id bigserial NOT NULL
-    , user_id bigint REFERENCES appdata.user(user_id) ON DELETE CASCADE
-    , image_id_a bigint NOT NULL DEFAULT nextval('poll_image_id_seq')
-    , image_id_b bigint NOT NULL DEFAULT nextval('poll_image_id_seq')
-    , image_path_a varchar(100) NOT NULL
-    , image_path_b varchar(100) NOT NULL
-    , vote_a_cnt bigint
-    , vote_b_cnt bigint
-    , post_date timestamp without time zone
+    poll_id BIGSERIAL NOT NULL
+    , uuid VARCHAR(100) REFERENCES appdata.user(uuid) ON DELETE CASCADE
+    , image_id_a BIGINT NOT NULL DEFAULT NEXTVAL('poll_image_id_seq')
+    , image_id_b BIGINT NOT NULL DEFAULT NEXTVAL('poll_image_id_seq')
+    , image_path_a VARCHAR(100) NOT NULL
+    , image_path_b VARCHAR(100) NOT NULL
+    , vote_a_cnt BIGINT
+    , vote_b_cnt BIGINT
+    , post_date TIMESTAMP WITHOUT TIME ZONE
     , user_tag TEXT
     , model_tag TEXT
     , PRIMARY KEY (poll_id)
@@ -40,10 +40,11 @@ CREATE TABLE IF NOT EXISTS appdata.poll
 
 
 
-CREATE TABLE IF NOT EXISTS appdata.vote (
-	user_id bigint REFERENCES appdata.user(user_id) ON DELETE CASCADE
-	,voter_poll_id bigint
-    ,poll_date timestamp without time zone
+CREATE TABLE IF NOT EXISTS "appdata.vote" 
+(
+	uuid BIGINT REFERENCES appdata.user(uuid) ON DELETE CASCADE
+	, voter_poll_id BIGINT
+    , poll_date TIMESTAMP WITHOUT TIME ZONE
 );
 
 
