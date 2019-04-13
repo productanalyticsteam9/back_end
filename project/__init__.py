@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, render_template, make_response, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
@@ -57,9 +57,40 @@ def load_user(uuid):
 
 
 from project.users.views import users_blueprint
+from project.models import User
+from project.models import ValidationError
 
 
 app.register_blueprint(users_blueprint)
+
+
+@app.errorhandler(ValidationError)
+def bad_request(e):
+    response = jsonify({'status':400, 'error': 'bad request',
+                        'message': e.args[0]})
+    response.status_code = 400
+    return response
+
+
+@app.errorhandler(400)
+def page_not_found(e):
+    return make_response(jsonify({'error': 'Not found'}), 400)
+
+
+@app.errorhandler(401)
+def unauthorized(e):
+    return redirect(url_for('login'))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(403)
+def page_not_found(e):
+    return render_template('403.html'), 403
+
 
 if __name__ == "__main__":
     db.create_all()
