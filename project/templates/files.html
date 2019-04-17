@@ -1,0 +1,48 @@
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}S3 Object List{% endblock %}
+
+{% block head %}
+{{super()}}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+<link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/logo.png') }}" />
+{% endblock %}
+
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col-12-xs">
+        <h3>Bucket Info</h3>
+        <p>Created: {{ my_bucket.creation_date | datetimeformat }}</p>
+        <hr>
+
+        <form class="upload-form" action="/upload" action="/upload" method="POST" enctype="multipart/form-data">
+            <p><input type="file" name="file"></p>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+        <hr>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Filename</th>
+                <th>Last Modified</th>
+                <th>Type</th>
+            </tr>
+            {% for f in files %}
+            <tr>
+                <td>{{ f.key }}</td>
+                <td>{{ f.last_modified | datetimeformat }}</td>
+                <td>{{ f.key | file_type}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

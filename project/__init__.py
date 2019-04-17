@@ -1,9 +1,14 @@
-from flask import Flask
+import os
+from flask import Flask, jsonify, render_template, make_response, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-import os
+from flask_bootstrap import Bootstrap
+from flask_dropzone import Dropzone
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
+from .filters import datetimeformat, file_type
+from datetime import timedelta
 
 
 passwd = os.environ.get('DB_passwd')
@@ -24,20 +29,36 @@ postgres_str = 'postgresql+psycopg2://{username}:{password}@{ipaddress}:{port}/{
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+bootstrap = Bootstrap(app)
+dropzone = Dropzone(app)
 
 # csrf.init_app(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/shulun.chen/Documents/school_project/MSDS-603/back_end/project/database.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = postgres_str
 app.config['SECRET_KEY'] = '1234567890'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 # app.config['WTF_CSRF_ENABLED'] = False
 app.config['WTF_CSRF_SECRET_KEY'] = '1234567890'
 # app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 # app.config['SERVER_NAME'] = 'local.dev:5000'
 
 app.config.from_pyfile("upload_to_s3/config.py")
+app.jinja_env.filters['datetimeformat'] = datetimeformat
+app.jinja_env.filters['file_type'] = file_type
 
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
+# Dropzone settings
+app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
+app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
+app.config['DROPZONE_ALLOWED_FILE_TYPE'] = 'image/*'
+# app.config['DROPZONE_REDIRECT_VIEW'] = 'users.results'
+
+# Upload settings
+# app.config['UPLOADED_PHOTOS_DEST'] = app.config['S3_LOCATION']
+# photos = UploadSet('photos', IMAGES)
+# configure_uploads(app, photos)
+# patch_request_class(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -57,9 +78,51 @@ def load_user(uuid):
 
 
 from project.users.views import users_blueprint
+from project.models import User
+from project.models import ValidationError
 
 
 app.register_blueprint(users_blueprint)
+
+
+# Error handling
+@app.errorhandler(ValidationError)
+def bad_request(e):
+    response = jsonify({'status':400, 'error': 'bad request',
+                        'message': e.args[0]})
+    response.status_code = 400
+    return response
+
+
+@app.errorhandler(400)
+def page_not_found(e):
+    return make_response(jsonify({'error': 'Not found'}), 400)
+
+
+@app.errorhandler(401)
+def unauthorized(e):
+    return redirect(url_for('users.login'))
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return redirect(url_for('users.login'))
+
+
+@app.errorhandler(403)
+def forbidden(e):
+    return redirect(url_for('/'))
+
+
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     return render_template('404.html'), 404
+
+
+# @app.errorhandler(403)
+# def page_not_found(e):
+#     return render_template('403.html'), 403
+
 
 if __name__ == "__main__":
     db.create_all()

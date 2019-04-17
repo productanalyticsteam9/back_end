@@ -1,23 +1,101 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <title>Upload</title>
-    <link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/magnifying-glass-favicon.png') }}" />
-</head>
-<bodu>
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}Upload{% endblock %}
 
-    <h1>Upload</h1>
+{% block head %}
+{{super()}}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css">
+<link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/logo.png') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/upload_style.css') }}">
+{% endblock %}
 
-    <form action="" method='POST' enctype='multipart/form-data'>
+{% block body %}
+    {% block navbar %}
+    <nav class="navbar navbar-expand">
+        <div class="flex-grow-1 logowrapper">
+            <a class="navbar-brand" href="#"><img class="logo" src="{{ url_for('static',filename='img/logo.png') }}" style="height: 3.6rem;"></a>
+        </div>
+        
+        <div class="navbar navbar-toggleable-md navbar-light bg-faded">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>                
+    </nav>
+    {% endblock %}
+
+    <h2>Upload Your Photos</h2>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="text-center mt-5">
+                <h1>Poll Message:</h1>
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-5 mt-3">
+                        <div class = "well">
+                            <img class="img-thumbnail" src="{{ url1 }}" alt="not_found">
+                        </div>
+                    </div>
+                    <div class="col-md-1 mt-3"></div>
+                    <div class="col-md-5 mt-3">
+                        <div class = "well">
+                            <img class="img-thumbnail" src="{{ url2 }}" alt="not_found">
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <span class="badge badge-pill badge-primary mr-2">TV</span>
+                    <span class="badge badge-pill badge-secondary mr-2">Logo</span>
+                    <span class="badge badge-pill badge-warning mr-2">Logo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+            <div class="row justify-content-center">
+                <div class="text-center mt-5">
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-md-5 mt-3">
+                            <form action="" method='POST' enctype='multipart/form-data'>
+                                {{ form.csrf_token }}
+                                <br></br>
+                                {{ form.upload }}
+                                <br></br>
+                                <button class="btn btn-primary" type='submit'>Upload</button>
+                            </form>
+                        </div>
+                        <div class="col-md-5 mt-3">
+                            <form action="" method='POST' enctype='multipart/form-data'>
+                                {{ form.csrf_token }}
+                                <br></br>
+                                {{ form.upload }}
+                                <br></br>
+                                <button class="btn btn-primary" type='submit'>Upload</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- <form action="" method='POST' enctype='multipart/form-data'>
         {{ form.csrf_token }}
         {{ form.upload.label }}
         <br></br>
         {{ form.upload }}
-        <!-- <input type='file' name='user_file'> -->
         <br></br>
         <button type='submit'>Upload</button>
-    </form>
+    </form> -->
 
     <br />
     <div class="container">
@@ -32,5 +110,4 @@
             {% endfor %}
         </div>
     </div>
-</bodu>
-</html>
+{% endblock %}

@@ -64,3 +64,29 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+
+class ValidationError(ValueError):
+    pass
+
+
+class Poll(db.Model):
+
+    __tablename__ = schema+'.'+'poll'
+
+    poll_id = db.Column(db.String(100), primary_key=True)
+    uuid = db.Column(db.String(100), nullable=False)
+    image_id_a = db.Column(db.String(100), nullable=False)
+    image_id_b = db.Column(db.String(100), nullable=False)
+    image_path_a = db.Column(db.String(100), nullable=False)
+    image_path_b = db.Column(db.String(100), nullable=False)
+    vote_a_cnt = db.Column(db.Integer)
+    vote_b_cnt = db.Column(db.Integer)
+    post_date = db.Column(db.DateTime)
+    user_tag = db.Column(db.String(30))
+    model_tag = db.Column(db.String(30))
+    
+
+    def __init__(self):
+        self.post_date = datetime.now()
+        
