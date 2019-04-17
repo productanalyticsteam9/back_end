@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS "appdata.poll"
 
 CREATE TABLE IF NOT EXISTS "appdata.vote" 
 (
-  uuid BIGINT REFERENCES appdata.user(uuid) ON DELETE CASCADE
+  uuid BIGINT REFERENCES appdata.user(uuid) ON DELETE CASCADE --delete REFERENCES
   , voter_poll_id BIGINT
   , poll_date TIMESTAMP WITHOUT TIME ZONE
 );
