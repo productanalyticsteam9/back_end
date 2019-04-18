@@ -5,8 +5,8 @@ from datetime import datetime
 from uuid import uuid4
 
 from .. import app, db
-from ..models import User, Poll
-from .forms import RegisterForm, LoginForm, UploadForm, PollForm
+from ..models import Poll
+from .forms import PollForm
 from ..upload_to_s3.helper import upload_file_to_s3
 from ..resources import get_bucket, get_bucket_list
 from werkzeug.utils import secure_filename 

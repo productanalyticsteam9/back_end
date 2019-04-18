@@ -65,7 +65,7 @@ login_manager.init_app(app)
 login_manager.login_view = "users.login"
 
 
-from .models import User
+from .models import User, Poll
 
 @login_manager.user_loader
 def load_user(uuid):
@@ -78,11 +78,13 @@ def load_user(uuid):
 
 
 from project.users.views import users_blueprint
-from project.models import User
+from project.poll.views import poll_blueprint
+from project.models import User,Poll
 from project.models import ValidationError
 
 
 app.register_blueprint(users_blueprint)
+app.register_blueprint(poll_blueprint)
 
 
 # Error handling
