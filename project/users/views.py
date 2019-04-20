@@ -128,7 +128,7 @@ def upload():
     return render_template('upload.html', form=form)
 
 
-@users_blueprint.route("/files", methods=["GET", "POST"])
+@users_blueprint.route("/files")
 @login_required
 def files():
     my_bucket = get_bucket()

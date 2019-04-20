@@ -94,6 +94,3 @@ class Poll(db.Model):
         self.image_path = image_path
         self.post_date = datetime.now()
 
-
-
-        

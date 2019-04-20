@@ -23,6 +23,9 @@ def upload_file_to_s3(file, bucket_name, folder='user', acl='public-read'):
             bucket_name,
             file_path
         )
+        url = s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name, 
+                                                              'Key': file_path},
+                                        ExpiresIn=604800)
     except Exception as e:
         print("Something happened:", e)
         return e
