@@ -2,6 +2,8 @@ from project import db
 from project import bcrypt as bcrypt_app
 import bcrypt
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
+from sqlalchemy import Integer, String
+from sqlalchemy.dialects import postgresql
 from datetime import datetime
 
 
@@ -68,3 +70,27 @@ class User(db.Model):
 
 class ValidationError(ValueError):
     pass
+
+
+class Poll(db.Model):
+
+    __tablename__ = schema+'.'+'poll'
+
+    poll_text = db.Column(db.String(200), nullable=False)
+    poll_uuid = db.Column(db.String(100), primary_key=True)
+    uuid = db.Column(db.String(100), nullable=False)
+    image_id = db.Column(postgresql.ARRAY(Integer), nullable=False)
+    image_path = db.Column(postgresql.ARRAY(String), nullable=False)
+    vote_cnt = db.Column(postgresql.ARRAY(Integer))
+    post_date = db.Column(db.DateTime)
+    user_tag = db.Column(db.String(80))
+    model_tag = db.Column(db.String(80))    
+
+    def __init__(self, poll_text, poll_uuid, uuid, image_id, image_path):
+        self.poll_text = poll_text
+        self.poll_uuid = poll_uuid
+        self.uuid = uuid
+        self.image_id = image_id
+        self.image_path = image_path
+        self.post_date = datetime.now()
+

@@ -5,97 +5,76 @@
 {% block head %}
 {{super()}}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css"> 
+
+<!-- mobirise CSS -->
+<link rel="stylesheet" href="../static/assets/web/assets/mobirise-icons/mobirise-icons.css">
+<link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/assets/dropdown/css/style.css">
+<link rel="stylesheet" href="../static/assets/mobirise/css/mbr-additional.css" type="text/css">
 <link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/logo.png') }}" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/upload_style.css') }}">
 {% endblock %}
 
 {% block body %}
-    {% block navbar %}
-    <nav class="navbar navbar-expand">
-        <div class="flex-grow-1 logowrapper">
-            <a class="navbar-brand" href="#"><img class="logo" src="{{ url_for('static',filename='img/logo.png') }}" style="height: 3.6rem;"></a>
-        </div>
-        
-        <div class="navbar navbar-toggleable-md navbar-light bg-faded">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-        </div>                
-    </nav>
-    {% endblock %}
+    <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-4">
+        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="menu-logo">
+                <div class="navbar-brand">
+                    <span class="navbar-logo">
+                        <a href="/">
+                                <img src="../static/assets/images/logo.png" style="height: 3.6rem;">
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
+                        <a class="nav-link link text-white display-4" href="/user_home">
+                            <span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>
+                            User Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white display-4" href="/files">
+                            Files
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white display-4" href="/submit_poll" >
+                            Poll
+                        </a>
+                    </li>
+                </ul>
 
+            </div>
+        </nav>
+    </section>
     <h2>Upload Your Photos</h2>
 
     <div class="container">
         <div class="row justify-content-center">
             <div class="text-center mt-5">
-                <h1>Poll Message:</h1>
-                <div class="row justify-content-center mt-3">
-                    <div class="col-md-5 mt-3">
-                        <div class = "well">
-                            <img class="img-thumbnail" src="{{ url1 }}" alt="not_found">
-                        </div>
-                    </div>
-                    <div class="col-md-1 mt-3"></div>
-                    <div class="col-md-5 mt-3">
-                        <div class = "well">
-                            <img class="img-thumbnail" src="{{ url2 }}" alt="not_found">
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-3">
-                    <span class="badge badge-pill badge-primary mr-2">TV</span>
-                    <span class="badge badge-pill badge-secondary mr-2">Logo</span>
-                    <span class="badge badge-pill badge-warning mr-2">Logo</span>
+                <div class="col-12-sm mt-3">
+                    <form action="/upload" method='POST' enctype='multipart/form-data'>
+                        {{ form.csrf_token }}
+                        <br></br>
+                        <p>{{ form.upload(multiple="multiple") }}</p>
+                        <br></br>
+                        <button class="btn btn-primary" type='submit'>Upload</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="container">
-            <div class="row justify-content-center">
-                <div class="text-center mt-5">
-                    <div class="row justify-content-center mt-3">
-                        <div class="col-md-5 mt-3">
-                            <form action="" method='POST' enctype='multipart/form-data'>
-                                {{ form.csrf_token }}
-                                <br></br>
-                                {{ form.upload }}
-                                <br></br>
-                                <button class="btn btn-primary" type='submit'>Upload</button>
-                            </form>
-                        </div>
-                        <div class="col-md-5 mt-3">
-                            <form action="" method='POST' enctype='multipart/form-data'>
-                                {{ form.csrf_token }}
-                                <br></br>
-                                {{ form.upload }}
-                                <br></br>
-                                <button class="btn btn-primary" type='submit'>Upload</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    <!-- <form action="" method='POST' enctype='multipart/form-data'>
-        {{ form.csrf_token }}
-        {{ form.upload.label }}
-        <br></br>
-        {{ form.upload }}
-        <br></br>
-        <button type='submit'>Upload</button>
-    </form> -->
 
     <br />
     <div class="container">
@@ -110,4 +89,9 @@
             {% endfor %}
         </div>
     </div>
+
+    <!-- mobirise Scripts -->
+    <script src="../static/assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/assets/dropdown/js/script.min.js"></script>
 {% endblock %}
