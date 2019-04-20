@@ -24,30 +24,24 @@ CREATE TABLE IF NOT EXISTS "appdata.user"
 
 CREATE TABLE IF NOT EXISTS "appdata.poll" 
 (
-  poll_id BIGSERIAL NOT NULL
-  , uuid VARCHAR(100) REFERENCES appdata.user(uuid) ON DELETE CASCADE
-  , image_id_a BIGINT NOT NULL DEFAULT NEXTVAL('poll_image_id_seq')
-  , image_id_b BIGINT NOT NULL DEFAULT NEXTVAL('poll_image_id_seq')
-  , image_path_a VARCHAR(100) NOT NULL
-  , image_path_b VARCHAR(100) NOT NULL
-  , vote_a_cnt BIGINT
-  , vote_b_cnt BIGINT
+  poll_uuid VARCHAR(100) NOT NULL
+  , uuid VARCHAR(100) 
+  , image_id BIGINT [] NOT NULL  
+  , image_path VARCHAR [] NOT NULL
+  , vote_cnt BIGINT []
   , post_date TIMESTAMP WITHOUT TIME ZONE
   , user_tag TEXT
   , model_tag TEXT
-  , PRIMARY KEY (poll_id)
+  , poll_text VARCHAR(200)
+  , PRIMARY KEY (poll_uuid)
 );
-
 
 
 CREATE TABLE IF NOT EXISTS "appdata.vote" 
 (
-  uuid BIGINT   --delete REFERENCES
+  uuid VARCHAR(100) 
   , voter_poll_id BIGINT
   , poll_date TIMESTAMP WITHOUT TIME ZONE
 );
 
-
-
 commit;
-
