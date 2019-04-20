@@ -34,7 +34,6 @@ bcrypt = Bcrypt(app)
 bootstrap = Bootstrap(app)
 dropzone = Dropzone(app)
 
-# csrf.init_app(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/shulun.chen/Documents/school_project/MSDS-603/back_end/project/database.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = postgres_str
 app.config['SECRET_KEY'] = '1234567890'
@@ -79,7 +78,6 @@ def load_user(uuid):
 
 from project.users.views import users_blueprint
 from project.poll.views import poll_blueprint
-from project.models import User,Poll
 from project.models import ValidationError
 
 

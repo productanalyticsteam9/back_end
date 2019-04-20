@@ -23,12 +23,21 @@ def upload_file_to_s3(file, bucket_name, folder='user', acl='public-read'):
             bucket_name,
             file_path
         )
-        url = s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name, 
-                                                              'Key': file_path},
-                                        ExpiresIn=604800)
     except Exception as e:
         print("Something happened:", e)
         return e
     
     # return "{}{}".format(app.config['S3_LOCATION'], file_path)
+
+
+def generate_file_url(file, bucket_name, folder='user'):
+    s3 = _get_s3_client()
+    try:
+        file_path = "{}/{}".format(folder, file.filename)
+        url = s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name,
+                                                              'Key': file_path},
+                                        ExpiresIn=604800)
+    except Exception as e:
+        print("Something happened:", e)
+        return e
     return url

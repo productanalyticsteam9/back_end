@@ -7,7 +7,9 @@ from uuid import uuid4
 from .. import app, db
 from ..models import User
 from .forms import RegisterForm, LoginForm, UploadForm
-from ..upload_to_s3.helper import upload_file_to_s3
+from ..poll.forms import PollForm
+from ..upload_to_s3.helper import upload_file_to_s3, generate_file_url
+from ..upload_to_s3.config import S3_BUCKET
 from ..resources import get_bucket, get_bucket_list
 from werkzeug.utils import secure_filename 
 
@@ -73,7 +75,7 @@ def register():
                     flash("Sorry, username ({}) or email ({}) already exists.".format(uname, mail), 'error')
                 else:
                     register = User(username=uname, email=mail, plain_password=passw)
-                    register.uuid = str(uuid4())
+                    register.uuid = uuid4()
                     register.age = age
                     register.gender = gender
                     register.city = city
@@ -99,6 +101,7 @@ def logout():
     user.authenticated = False
     db.session.add(user)
     db.session.commit()
+    session.clear()
     logout_user()
     flash("Goodbye and look forward to seeing you next time!", 'success')
     return redirect(url_for("users.login"))
@@ -107,71 +110,25 @@ def logout():
 @users_blueprint.route("/upload", methods=["GET", "POST"])
 @login_required
 def upload():
-    # if 'user_file' not in request.files:
-    #     return "Please select a file to upload."
-    
-    # user = current_user
-    # form = UploadForm()
-    # if request.method == 'POST':
-    #     if form.validate_on_submit():
-    #         return_file = form.upload.data
-    #         if return_file:
-    #             return_file.filename = secure_filename(return_file.filename)
-    #             output = upload_file_to_s3(return_file, app.config['S3_BUCKET'], folder=user.uuid)
-    #             session['image_url'] = output
-    #             # return output, 200
-    #             return redirect(url_for('users.images'))
-    #         else:
-    #             return redirect(url_for("users.upload"))
-    #     else:
-    #         flash("Sorry, your file type is not allowed.", 'info')
-    # return render_template('upload.html', form=form)
-
     user = current_user
+    form = UploadForm()
     if "file_urls" not in session:
         session['file_urls'] = []
     file_urls = session['file_urls']
-    print('hello')
-    print(request.method)
-    print(request.files, len(request.files))
-
     if request.method == 'POST':
-        print('haha')
-        file_obj = request.files
-        for f in file_obj:
-            return_file = request.files.get(f)
-            url = upload_file_to_s3(return_file, app.config['S3_BUCKET'], folder=user.uuid)
-            print(url)
-            file_urls.append(url)
+        if form.validate_on_submit() and request.files:
+            for f in request.files.getlist('upload'):
+                f.filename = secure_filename(f.filename)
+                upload_file_to_s3(f, S3_BUCKET, folder=user.uuid)
+                url = generate_file_url(f, S3_BUCKET, folder=user.uuid)
+                file_urls.append(url)
+            session['file_urls'] = file_urls
+            return redirect(url_for('poll.submit_poll', file_urls=file_urls))
 
-        session['file_urls'] = file_urls
-        return "uploading..."
-    return render_template('dropzone.html')
-
-
-@users_blueprint.route("/results")
-@login_required
-def results():
-    
-    # redirect to home if no images to display
-    if "file_urls" not in session or session['file_urls'] == []:
-        return redirect(url_for('users.upload'))
-        
-    # set the file_urls and remove the session variable
-    file_urls = session['file_urls']
-    session.pop('file_urls', None)
-    
-    return render_template('results.html', file_urls=file_urls)
+    return render_template('upload.html', form=form)
 
 
-@users_blueprint.route("/images")
-@login_required
-def images():
-    url = session['image_url']
-    return render_template('images.html', url=url)
-
-
-@users_blueprint.route("/files")
+@users_blueprint.route("/files", methods=["GET", "POST"])
 @login_required
 def files():
     my_bucket = get_bucket()

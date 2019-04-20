@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import StringField, PasswordField, IntegerField, RadioField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Length, EqualTo, Email, NumberRange, Optional
-import pycountry as pc
+from wtforms import StringField, TextField
+from wtforms.validators import DataRequired, Length, Optional
+
 
 class PollForm(FlaskForm):
-    poll_text = StringField('Poll Text', validators=[DataRequired(), Length(min=0, max=150)])
+    poll_text = TextField('Poll Text', validators=[DataRequired()])
+    user_tag = StringField('User Tag', validators=[Optional()])
