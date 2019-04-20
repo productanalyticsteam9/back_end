@@ -7,7 +7,6 @@ from uuid import uuid4
 from .. import app, db
 from ..models import User
 from .forms import RegisterForm, LoginForm, UploadForm
-from ..poll.forms import PollForm
 from ..upload_to_s3.helper import upload_file_to_s3, generate_file_url
 from ..upload_to_s3.config import S3_BUCKET
 from ..resources import get_bucket, get_bucket_list
@@ -115,15 +114,17 @@ def upload():
     if "file_urls" not in session:
         session['file_urls'] = []
     file_urls = session['file_urls']
+    poll_uuid = uuid4()
     if request.method == 'POST':
         if form.validate_on_submit() and request.files:
             for f in request.files.getlist('upload'):
                 f.filename = secure_filename(f.filename)
-                upload_file_to_s3(f, S3_BUCKET, folder=user.uuid)
-                url = generate_file_url(f, S3_BUCKET, folder=user.uuid)
+                upload_file_to_s3(f, S3_BUCKET, poll=poll_uuid, folder=user.uuid)
+                url = generate_file_url(f, S3_BUCKET, poll=poll_uuid, folder=user.uuid)
                 file_urls.append(url)
             session['file_urls'] = file_urls
-            return redirect(url_for('poll.submit_poll', file_urls=file_urls))
+            session['poll_uuid'] = poll_uuid
+            return redirect(url_for('poll.submit_poll'))
 
     return render_template('upload.html', form=form)
 

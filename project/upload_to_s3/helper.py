@@ -11,20 +11,20 @@ def allowed_file(name):
 
 # Connect and upload to s3
 
-def upload_file_to_s3(file, bucket_name, folder='user', acl='public-read'):
+def upload_file_to_s3(file, bucket_name, poll='test_poll', folder='user', acl='public-read'):
     """
     Docs: http://boto3.readthedocs.io/en/latest/guides/s3.html
     """
     s3 = _get_s3_client()
     try:
-        file_path = "{}/{}".format(folder, file.filename)
+        file_path = "{}/{}/{}".format(folder, poll, file.filename)
         s3.upload_fileobj(
             file,
             bucket_name,
             file_path
         )
-        url = s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name, 
-                                                              'Key': file_path},
+        s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name, 
+                                                        'Key': file_path},
                                         ExpiresIn=604800)
     except Exception as e:
         print("Something happened:", e)
@@ -33,10 +33,10 @@ def upload_file_to_s3(file, bucket_name, folder='user', acl='public-read'):
     # return "{}{}".format(app.config['S3_LOCATION'], file_path)
 
 
-def generate_file_url(file, bucket_name, folder='user'):
+def generate_file_url(file, bucket_name, poll='poll_test', folder='user'):
     s3 = _get_s3_client()
     try:
-        file_path = "{}/{}".format(folder, file.filename)
+        file_path = "{}/{}/{}".format(folder, poll, file.filename)
         url = s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name,
                                                               'Key': file_path},
                                         ExpiresIn=604800)

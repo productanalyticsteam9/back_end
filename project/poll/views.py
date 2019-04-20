@@ -1,7 +1,6 @@
 from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint
 from flask_login import login_user, current_user, login_required, logout_user
 from datetime import datetime
-from uuid import uuid4
 import re
 
 from .. import app, db
@@ -18,14 +17,13 @@ poll_blueprint = Blueprint('poll', __name__)
 def submit_poll():
     user = current_user
     form = PollForm(request.form)
-
     file_urls = session['file_urls']
     
     if request.method == "POST":
         if form.validate_on_submit():
             try:
                 poll_text = form.poll_text.data
-                poll_uuid = uuid4()
+                poll_uuid = session['poll_uuid']
                 uuid = user.uuid
                 image_id = list(range(1, len(file_urls)+1))
                 image_path = file_urls
@@ -39,6 +37,7 @@ def submit_poll():
                 db.session.add(poll)
                 db.session.commit()
                 session.pop('file_urls', None)
+                session.pop('poll_uuid', None)
                 flash("Thank you for submitting your poll!", 'success')
             except Exception as e:
                 db.session.rollback()
