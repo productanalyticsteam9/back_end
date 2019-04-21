@@ -17,6 +17,8 @@ poll_blueprint = Blueprint('poll', __name__)
 def submit_poll():
     user = current_user
     form = PollForm(request.form)
+    if 'file_urls' not in session or session['file_urls'] == []:
+        return redirect(url_for('users.upload'))
     file_urls = session['file_urls']
     
     if request.method == "POST":
