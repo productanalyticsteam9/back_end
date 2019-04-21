@@ -4,6 +4,7 @@ import bcrypt
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy import Integer, String
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.dialects.postgresql import JSONB
 from datetime import datetime
 
 
@@ -79,7 +80,7 @@ class Poll(db.Model):
     poll_text = db.Column(db.String(200), nullable=False)
     poll_uuid = db.Column(db.String(100), primary_key=True)
     uuid = db.Column(db.String(100), nullable=False)
-    image_id = db.Column(postgresql.ARRAY(Integer), nullable=False)
+    image_id = db.Column(JSONB, nullable=False)
     image_path = db.Column(postgresql.ARRAY(String), nullable=False)
     vote_cnt = db.Column(postgresql.ARRAY(Integer))
     post_date = db.Column(db.DateTime)

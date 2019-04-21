@@ -27,7 +27,12 @@ def submit_poll():
                 poll_text = form.poll_text.data
                 poll_uuid = session['poll_uuid']
                 uuid = user.uuid
-                image_id = list(range(1, len(file_urls)+1))
+                id_name_dict, cnt = {}, 1
+                for url in file_urls:
+                    f_name = url.split('?')[0].split('/')[-1]
+                    id_name_dict[cnt] = f_name
+                    cnt += 1
+                image_id = id_name_dict
                 image_path = file_urls
                 if form.user_tag.data:
                     user_tag = re.findall(r"\b\w+\b", form.user_tag.data)
