@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS "appdata.poll"
 (
   poll_uuid VARCHAR(100) NOT NULL
   , uuid VARCHAR(100) 
-  , image_id BIGINT [] NOT NULL  
+  , image_id JSON NOT NULL  
   , image_path VARCHAR [] NOT NULL
   , vote_cnt BIGINT []
   , post_date TIMESTAMP WITHOUT TIME ZONE
@@ -37,11 +37,11 @@ CREATE TABLE IF NOT EXISTS "appdata.poll"
 );
 
 
-CREATE TABLE IF NOT EXISTS "appdata.vote" 
+CREATE TABLE IF NOT EXISTS "appdata.vote_history" 
 (
   uuid VARCHAR(100) 
-  , voter_poll_id BIGINT
-  , poll_date TIMESTAMP WITHOUT TIME ZONE
+  , poll_uuid VARCHAR(100) NOT NULL
+  , vote_date TIMESTAMP WITHOUT TIME ZONE
 );
 
 commit;
