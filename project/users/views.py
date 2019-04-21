@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint
+from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint, Response, send_file
 from flask_login import login_user, current_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
@@ -9,7 +9,7 @@ from ..models import User
 from .forms import RegisterForm, LoginForm, UploadForm
 from ..upload_to_s3.helper import upload_file_to_s3, generate_file_url
 from ..upload_to_s3.config import S3_BUCKET
-from ..resources import get_bucket, get_bucket_list
+from ..resources import get_bucket, get_bucket_list, _get_s3_client
 from werkzeug.utils import secure_filename 
 
 
@@ -129,9 +129,26 @@ def upload():
     return render_template('upload.html', form=form)
 
 
-@users_blueprint.route("/files")
+@users_blueprint.route("/download", methods=["GET"])
+@login_required
+def download():
+    key = request.form['key']
+    print(key)
+    my_bucket = get_bucket()
+    file_obj = my_bucket.Object(key).get()
+    return Response(
+        file_obj['Body'].read(),
+        mimetype='text/plain',
+        headers={"Content-Disposition": "attachment;filename={}".format(key)}
+    )
+
+
+@users_blueprint.route("/files", methods=['GET'])
 @login_required
 def files():
+    user = current_user
     my_bucket = get_bucket()
-    summaries = my_bucket.objects.all()
-    return render_template('files.html', my_bucket=my_bucket, files=summaries)
+    summaries = my_bucket.objects.filter(Prefix=user.uuid)
+    get_last_modified = lambda obj: int(obj.last_modified.strftime('%s'))
+    files = [obj for obj in sorted(summaries, key=get_last_modified, reverse=True)]
+    return render_template('files.html', my_bucket=my_bucket, files=files)
