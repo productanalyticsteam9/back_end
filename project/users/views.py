@@ -117,11 +117,13 @@ def upload():
     poll_uuid = uuid4()
     if request.method == 'POST':
         if form.validate_on_submit() and request.files:
+            cnt = 1
             for f in request.files.getlist('upload'):
                 f.filename = secure_filename(f.filename)
-                upload_file_to_s3(f, S3_BUCKET, poll=poll_uuid, folder=user.uuid)
-                url = generate_file_url(f, S3_BUCKET, poll=poll_uuid, folder=user.uuid)
+                upload_file_to_s3(f, S3_BUCKET, folder=user.uuid, poll=poll_uuid, image=cnt)
+                url = generate_file_url(f, S3_BUCKET, folder=user.uuid, poll=poll_uuid, image=cnt)
                 file_urls.append(url)
+                cnt += 1
             session['file_urls'] = file_urls
             session['poll_uuid'] = poll_uuid
             return redirect(url_for('poll.submit_poll'))
