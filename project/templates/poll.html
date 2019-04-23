@@ -94,9 +94,10 @@
                     {% endfor %}
                 </div>
                 <div class="row justify-content-center mt-4">
-                    <span class="input-group-text mr-2">Select Tags</span>
-                    <span class="input-group-text badge-success mr-2">Nike</span>
-                    <span class="input-group-text badge-success mr-2">CoolShoes</span>
+                    <span class="input-group-text mr-2">Auto Tags</span>
+                    {% for tag in model_tags %}
+                        <span class="input-group-text badge-success mr-2">{{ tag }}</span>
+                    {% endfor %}
                 </div>
                 <div class="row justify-content-center mt-4">
                     {{ form.csrf_token }}
