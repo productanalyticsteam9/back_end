@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, session, logging, r
 from flask_login import login_user, current_user, login_required, logout_user
 from datetime import datetime
 import boto3
-from ..upload_to_s3.config import S3_BUCKET, S3_KEY, S3_SECRET
+from ..upload_to_s3.config import S3_BUCKET
 import re, itertools, random
 
 from .. import app, db
@@ -13,7 +13,6 @@ from .forms import PollForm
 poll_blueprint = Blueprint('poll', __name__)
 
 
-# @poll_blueprint.route("/poll/<uuid>/<poll_uuid>", methods=["GET", "POST"]) # def submit_poll(uuid, poll_uuid):
 @poll_blueprint.route("/submit_poll", methods=["GET", "POST"])
 @login_required
 def submit_poll():
@@ -27,7 +26,6 @@ def submit_poll():
     client = boto3.client('rekognition') # ML model client
     for url in file_urls:
         f_path = url.split('com/')[1].split('?')[0]
-        print(f_path)
         response = client.detect_labels(Image={
                         'S3Object': {'Bucket': S3_BUCKET,
                                         'Name': f_path}
