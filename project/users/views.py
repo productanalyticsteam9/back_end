@@ -5,7 +5,7 @@ from datetime import datetime
 from uuid import uuid4
 
 from .. import app, db
-from ..models import User
+from ..models import User, Poll
 from .forms import RegisterForm, LoginForm, UploadForm
 from ..upload_to_s3.helper import upload_file_to_s3, generate_file_url
 from ..upload_to_s3.config import S3_BUCKET
@@ -27,6 +27,16 @@ def home():
     return render_template("index_old.html")
 
 
+@users_blueprint.route("/user_home/<uuid>", methods=["GET", "POST"])
+@login_required
+def user_home(uuid):
+    polls = Poll.query.filter_by(uuid=uuid).all()
+    poll_texts = [poll.poll_text for poll in polls]
+    poll_images = [poll.image_path for poll in polls]
+    poll_dates = [poll.post_date for poll in polls]
+    return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, poll_dates=poll_dates)
+
+
 @users_blueprint.route("/login", methods=["GET", "POST"])
 def login():
     session.permanent = True
@@ -45,7 +55,7 @@ def login():
                 db.session.commit()
                 login_user(user)
                 flash("Thanks for logging in, {}!".format(current_user.username), 'success')
-                return redirect(url_for("users.home"))
+                return redirect(url_for("users.user_home", uuid=user.uuid))
             else:
                 flash("ERROR! Incorrect login credentials.", 'error')
     return render_template("login.html", form=form)
