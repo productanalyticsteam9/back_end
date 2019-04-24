@@ -22,3 +22,7 @@ def file_type(key):
         if file_extension in additional_file_types.keys():
             filetype = additional_file_types[file_extension]
         return filetype
+
+
+def file_name(key):
+    return key.split('/')[-1]

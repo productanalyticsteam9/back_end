@@ -34,8 +34,8 @@ class User(db.Model):
         self.email = email
         self.password = plain_password
         self.authenticated = False
-        self.created_on = datetime.now()
-        self.current_login = datetime.now()
+        self.created_on = datetime.utcnow()
+        self.current_login = datetime.utcnow()
     
     @hybrid_property
     def password(self):
@@ -93,5 +93,5 @@ class Poll(db.Model):
         self.uuid = uuid
         self.image_id = image_id
         self.image_path = image_path
-        self.post_date = datetime.now()
+        self.post_date = datetime.utcnow()
 

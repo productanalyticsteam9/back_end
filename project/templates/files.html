@@ -75,7 +75,7 @@
                 </tr>
                 {% for f in files %}
                 <tr>
-                    <td>{{ f.key }}</td>
+                    <td>{{ f.key | file_name }}</td>
                     <td>{{ f.last_modified | datetimeformat }}</td>
                     <td>{{ f.key | file_type }}</td>
                     <td class="td-buttons">

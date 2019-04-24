@@ -7,7 +7,7 @@ from flask_bcrypt import Bcrypt
 from flask_bootstrap import Bootstrap
 from flask_dropzone import Dropzone
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-from .filters import datetimeformat, file_type
+from .filters import datetimeformat, file_type, file_name
 from datetime import timedelta
 
 
@@ -46,6 +46,7 @@ app.config['WTF_CSRF_SECRET_KEY'] = '1234567890'
 app.config.from_pyfile("upload_to_s3/config.py")
 app.jinja_env.filters['datetimeformat'] = datetimeformat
 app.jinja_env.filters['file_type'] = file_type
+app.jinja_env.filters['file_name'] = file_name
 
 # Dropzone settings
 app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
