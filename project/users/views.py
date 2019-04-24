@@ -141,10 +141,9 @@ def upload():
     return render_template('upload.html', form=form, uuid=user.uuid)
 
 
-@users_blueprint.route("/download", methods=["GET"])
+@users_blueprint.route("/download/<path:key>", methods=["GET"])
 @login_required
-def download():
-    key = request.form['key']
+def download(key):
     print(key)
     my_bucket = get_bucket()
     file_obj = my_bucket.Object(key).get()
