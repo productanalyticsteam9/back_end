@@ -68,4 +68,4 @@ def submit_poll():
         else:
             flash("Sorry, the contents you entered do not conform to our standards.", 'info')
     
-    return render_template('poll.html', form=form, file_urls=file_urls, model_tags=model_tags)
+    return render_template('poll.html', form=form, file_urls=file_urls, model_tags=model_tags, uuid=user.uuid)

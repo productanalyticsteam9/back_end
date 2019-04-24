@@ -138,7 +138,7 @@ def upload():
             session['poll_uuid'] = poll_uuid
             return redirect(url_for('poll.submit_poll'))
 
-    return render_template('upload.html', form=form)
+    return render_template('upload.html', form=form, uuid=user.uuid)
 
 
 @users_blueprint.route("/download", methods=["GET"])
@@ -163,4 +163,4 @@ def files():
     summaries = my_bucket.objects.filter(Prefix=user.uuid)
     get_last_modified = lambda obj: int(obj.last_modified.strftime('%s'))
     files = [obj for obj in sorted(summaries, key=get_last_modified, reverse=True)]
-    return render_template('files.html', my_bucket=my_bucket, files=files)
+    return render_template('files.html', my_bucket=my_bucket, files=files, uuid=user.uuid)
