@@ -144,13 +144,12 @@ def upload():
 @users_blueprint.route("/download/<path:key>", methods=["GET"])
 @login_required
 def download(key):
-    print(key)
     my_bucket = get_bucket()
     file_obj = my_bucket.Object(key).get()
     return Response(
         file_obj['Body'].read(),
         mimetype='text/plain',
-        headers={"Content-Disposition": "attachment;filename={}".format(key)}
+        headers={"Content-Disposition": "attachment;filename={}".format(key.split('/')[-1])}
     )
 
 
