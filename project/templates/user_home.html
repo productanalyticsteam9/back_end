@@ -119,7 +119,7 @@
                       <img class="card-img-top img-thumbnail" style="height:200px; width:200px" src="{{ path }}" alt="poll image">
                     </div>
                 {% endfor %}
-                <a class="btn btn-primary" href="#" role="button">Vote</a>
+                <a class="btn btn-primary" href="{{ url_for('poll.poll_vote', poll_uuid=poll_ids[loop.index0]}}" role="button">Vote</a>
               </div>
             </div>
           </div>

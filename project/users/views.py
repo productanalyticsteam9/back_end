@@ -34,7 +34,8 @@ def user_home(uuid):
     poll_texts = [poll.poll_text for poll in polls]
     poll_images = [poll.image_path for poll in polls]
     poll_dates = [poll.post_date for poll in polls]
-    return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, poll_dates=poll_dates)
+    poll_ids = [poll.poll_uuid for poll in polls]
+    return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, poll_dates=poll_dates, poll_ids=poll_ids)
 
 
 @users_blueprint.route("/login", methods=["GET", "POST"])
