@@ -87,11 +87,14 @@ class Poll(db.Model):
     user_tag = db.Column(db.String(80))
     model_tag = db.Column(db.String(80))    
 
-    def __init__(self, poll_text, poll_uuid, uuid, image_id, image_path):
+    def __init__(self, poll_text, poll_uuid, uuid, image_id, image_path, user_tag, model_tag, vote_cnt):
         self.poll_text = poll_text
         self.poll_uuid = poll_uuid
         self.uuid = uuid
         self.image_id = image_id
         self.image_path = image_path
         self.post_date = datetime.utcnow()
+        self.user_tag = user_tag
+        self.model_tag = model_tag
+        self.vote_cnt = vote_cnt
 
