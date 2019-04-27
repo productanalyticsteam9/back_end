@@ -12,6 +12,23 @@ from .forms import PollForm
 
 poll_blueprint = Blueprint('poll', __name__)
 
+#############################################################################
+@poll_blueprint.route("/poll_vote/<poll_uuid>", methods = ['GET', 'POST'])
+@login_required
+def poll_vote_result(poll_uuid):
+    model_tags = []
+    form = PollForm(request.form)
+    polls = Poll.query.filter_by(poll_uuid=poll_uuid).all()
+    poll_texts = [poll.poll_text for poll in polls]
+    poll_images = [poll.image_path for poll in polls]
+    poll_dates = [poll.post_date for poll in polls]
+    return render_template("poll_vote.html",
+                           form = form,
+                           model_tags = model_tags,
+                           poll_texts=poll_texts,
+                           poll_images=poll_images,
+                           poll_dates=poll_dates)
+#############################################################################
 
 @poll_blueprint.route("/submit_poll", methods=["GET", "POST"])
 @login_required
@@ -23,16 +40,17 @@ def submit_poll():
     file_urls = session['file_urls']
 
     model_tag_lst = []
-    client = boto3.client('rekognition') # ML model client
-    for url in file_urls:
-        f_path = url.split('com/')[1].split('?')[0]
-        response = client.detect_labels(Image={
-                        'S3Object': {'Bucket': S3_BUCKET,
-                                        'Name': f_path}
-                        })
-        tags = [dic['Name'] for dic in response['Labels']]
-        model_tag_lst.append(tags)
-    model_tags = random.sample(set(itertools.chain(*model_tag_lst)), 4)
+    # client = boto3.client('rekognition') # ML model client
+    # for url in file_urls:
+    #     f_path = url.split('com/')[1].split('?')[0]
+    #     response = client.detect_labels(Image={
+    #                     'S3Object': {'Bucket': S3_BUCKET,
+    #                                     'Name': f_path}
+    #                     })
+    #     tags = [dic['Name'] for dic in response['Labels']]
+    #     model_tag_lst.append(tags)
+    # model_tags = random.sample(set(itertools.chain(*model_tag_lst)), 4)
+    model_tags = []
     
     if request.method == "POST":
         if form.validate_on_submit():

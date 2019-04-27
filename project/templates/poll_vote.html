@@ -1,0 +1,203 @@
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}Poll{% endblock %}
+
+{% block head %}
+    {{super()}}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="Mobirise v4.9.7, mobirise.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="shortcut icon" href="../static/assets/images/logo.png" type="image/x-icon">
+    <meta name="description" content="Website Creator Description">
+
+    <title>AorB</title>
+
+    <!-- mobirise CSS -->
+    <link rel="stylesheet" href="../static/assets/web/assets/mobirise-icons/mobirise-icons.css">
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="../static/assets/mobirise/css/mbr-additional.css" type="text/css">
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/poll_style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+
+
+{% endblock %}
+
+{% block body %}
+<section class="menu cid-qTkzRZLJNu" once="menu" id="head">
+        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="menu-logo">
+                <div class="navbar-brand">
+                    <span class="navbar-logo">
+                        <a href="/">
+                            <img src="../static/assets/images/logo.png" style="height: 3.6rem;">
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                    <li class="nav-item">
+                        <a class="nav-link link text-white display-4" href="/user_home/{{ uuid }}">
+                            <span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>
+                            User Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white display-4" href="/upload" >
+                            Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white display-4" href="/logout" >
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+    
+            </div>
+        </nav>
+</section>
+
+    <nav class="navbar navbar-expand">
+        <form class="form-inline">
+            <i class="fas fa-search" aria-hidden="true"></i>
+        </form>               
+    </nav>
+        <div class="container-fluid">
+            <form action="" name="poll-form" method="POST">
+                <div class="row justify-content-center mt-4">
+                    <div class="col-6">
+                        <div class="input-group mb-3">
+                            {{ form.csrf_token }}
+                            {% set label_attribs = {'id':"inputGroup-sizing-lg"} %}
+                            {{ form.poll_text.label(class_="input-group-prepend input-group-text", **label_attribs) }}
+                            {% set attribs = {'aria-label':"Poll Question", 'aria-describedby':"inputGroup-sizing-lg", 'placeholder':"Question?"} %}
+                            {{ form.poll_text(class_="form-control", **attribs) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    {% for url in file_urls %}
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <img src="{{ url }}" class="card-img-top" style="height: 18rem;">
+                                <div class="card-body"></div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <span class="input-group-text mr-2">Auto Tag</span>
+                    {% for tag in model_tags %}
+                        <span class="input-group-text badge-success mr-2">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                <div class="row justify-content-center mt-4">
+                    {{ form.csrf_token }}
+                    {{ form.user_tag.label(class_="input-group-text mr-2") }}
+                    <span class="input-group-text mr-2">
+                        {% set attribs = {'aria-label':"User Tags", 'aria-describedby':"inputGroup-sizing-sm", 'placeholder':"Tags?"} %}
+                        {{ form.user_tag(class_="form-control", **attribs) }}
+                    </span>
+                </div>
+{#                <div class="row justify-content-center mt-5">#}
+{#                    <div class="row-3">#}
+{#                        <button type="submit" class="btn btn-primary">#}
+{#                            Submit#}
+{#                        </button>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="row justify-content-center mt-2">
+                    <div class="row">
+                        <div class="col-6" style="text-align: center;">
+
+                            <button type="like1"
+                                    id = "btn1"
+                                    class="btn">
+                                    <i class="fa fa-heart w3-text-red" style="font-size:36px"></i>
+                            </button>
+
+                            <script type="text/javascript">
+                                var val=0
+                                $("#btn1").click(function() {
+                                    $("#output1").html(function(i, val) {return val*1+1});
+                                });
+                            </script>
+                            <div id="output1">{{ val }}</div>
+                        </div>
+
+
+                        <div class="col-6" style="text-align: center;">
+                            <button type="like2"
+                                    id = "btn2"
+                                    class="btn"
+                                    style="width:50%"
+{#                                    data-loading-text="...">5#}
+                                    ><i class="fa fa-heart w3-text-red" style="font-size:36px"></i>
+                            </button>
+
+                            <script type="text/javascript">
+                                var val2=0
+                                $("#btn2").click(function() {
+                                    $("#output2").html(function(i, val2) {return val2*1+1});
+                                });
+                            </script>
+                            <div id="output2">{{ val2 }}</div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <br />
+        <div class="container">
+            <div class="content">
+                <!-- flash messages-->
+                {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+                <div class="alert alert-danger alert-dismissible" role="alert">{{ error_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+        
+                {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+                <div class="alert alert-success alert-dismissible" role="alert">{{ success_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+        
+                {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+                <div class="alert alert-info alert-admissible" role="alert">{{ info_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    <!-- mobirise Scripts -->
+    <script src="../static/assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/assets/dropdown/js/script.min.js"></script>
+    <script src="../static/assets/bootstrapcarouselswipe/bootstrap-carousel-swipe.js"></script>
+    <script src="../static/assets/touchswipe/jquery.touch-swipe.min.js"></script>
+{% endblock %}
