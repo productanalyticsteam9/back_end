@@ -91,6 +91,7 @@
       {% endfor %}
 
     </div>
+
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mt-4">
@@ -104,6 +105,25 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="container-fluid">
+  <h2 class="text-center my-3">Recommended Polls</h2>
+      {% for text in poll_texts %}   
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">{{ text }}</p>
+              <div class="row">
+                {% for path in poll_images[loop.index0] %}
+                    <div class="col">
+                      <img class="card-img-top img-thumbnail" style="height:200px; width:200px" src="{{ path }}" alt="poll image">
+                    </div>
+                {% endfor %}
+                <a class="btn btn-primary" href="#" role="button">Vote</a>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
 </div>
 
   <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
