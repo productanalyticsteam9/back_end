@@ -3,6 +3,7 @@ from flask_login import login_user, current_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 from uuid import uuid4
+from sqlalchemy import desc
 
 from .. import app, db
 from ..models import User, Poll
@@ -34,7 +35,13 @@ def user_home(uuid):
     poll_texts = [poll.poll_text for poll in polls]
     poll_images = [poll.image_path for poll in polls]
     poll_dates = [poll.post_date for poll in polls]
-    return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, poll_dates=poll_dates)
+
+    polls_r = Poll.query.filter(Poll.uuid != uuid).order_by(desc(Poll.post_date)).limit(10)
+    poll_r_texts = [poll.poll_text for poll in polls_r]
+    poll_r_images = [poll.image_path for poll in polls_r]
+    poll_r_dates = [poll.post_date for poll in polls_r]
+    poll_r_uuid = [poll.uuid for poll in polls_r]
+    return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, poll_dates=poll_dates, poll_r_texts=poll_r_texts, poll_r_images=poll_r_images, poll_r_dates=poll_r_dates, poll_r_uuid=poll_r_uuid)
 
 
 @users_blueprint.route("/login", methods=["GET", "POST"])
