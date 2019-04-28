@@ -94,44 +94,43 @@
                     {% endfor %}
                 </div>
 
+                
+                <!–– vote buttons ––>
+                <div class="row justify-content-center mt-8">
+                    <span class="col-12 col-md-3" style="text-align: center;">
+                        <button type="button"
+                                id = "btn1"
+                                class="btn">
+                                <i class="fa fa-heart w3-text-pink" style="font-size:36px"></i>
+                        </button>
 
-                <div class="row justify-content-center mt-2">
-                    <div class="row">
-                        <div class="col-6" style="text-align: center;">
-                            <button type="button"
-                                    id = "btn1"
-                                    class="btn">
-                                    <i class="fa fa-heart w3-text-pink" style="font-size:36px"></i>
-                            </button>
-
-                            <script type="text/javascript">
+                        <script type="text/javascript">
                                 var val=0
                                 $("#btn1").click(function() {
-                                    $("#output1").html(function(i, val) {return +val+1});
+                                $("#output1").html(function(i, val) {return +val+1});
                                 });
-                            </script>
-                            <div id="output1">{{ val }}</div>
-                        </div>
+                        </script>
+                        <div id="output1">{{ val }}</div>
+                    </span>
 
 
-                        <div class="col-6" style="text-align: center;">
-                            <button type="button"
-                                    id = "btn2"
-                                    class="btn"
-                                    style="width:50%"
-                                    {# data-loading-text="...">5#}
-                                    ><i class="fa fa-heart w3-text-pink" style="font-size:36px"></i>
-                            </button>
+                    <span class="col-12 col-md-3" style="text-align: center;">
+                        <button type="button"
+                                id = "btn2"
+                                class="btn"
+                                {# style="width:50%" #}
+                                {# data-loading-text="...">5 #}
+                                ><i class="fa fa-heart w3-text-pink" style="font-size:36px"></i>
+                        </button>
 
-                            <script type="text/javascript">
+                        <script type="text/javascript">
                                 var val2= 0
                                 $("#btn2").click(function() {
-                                    $("#output2").html(function(i, val2) {return val2*1+1});
+                                $("#output2").html(function(i, val2) {return val2*1+1});
                                 });
-                            </script>
-                            <div id="output2">{{ val2 }}</div>
-                        </div>
-                    </div>
+                        </script>
+                        <div id="output2">{{ val2 }}</div>
+                    </span>
                 </div>
 
 <!--                 <!–– display vote counts ––>
