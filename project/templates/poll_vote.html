@@ -18,7 +18,11 @@
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/assets/dropdown/css/style.css">
     <link rel="stylesheet" href="../static/assets/mobirise/css/mbr-additional.css" type="text/css">
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/poll_style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -90,7 +94,47 @@
                     {% endfor %}
                 </div>
 
-                <!–– display vote counts ––>
+
+                <div class="row justify-content-center mt-2">
+                    <div class="row">
+                        <div class="col-6" style="text-align: center;">
+                            <button type="button"
+                                    id = "btn1"
+                                    class="btn">
+                                    <i class="fa fa-heart w3-text-pink" style="font-size:36px"></i>
+                            </button>
+
+                            <script type="text/javascript">
+                                var val=0
+                                $("#btn1").click(function() {
+                                    $("#output1").html(function(i, val) {return +val+1});
+                                });
+                            </script>
+                            <div id="output1">{{ val }}</div>
+                        </div>
+
+
+                        <div class="col-6" style="text-align: center;">
+                            <button type="button"
+                                    id = "btn2"
+                                    class="btn"
+                                    style="width:50%"
+                                    {# data-loading-text="...">5#}
+                                    ><i class="fa fa-heart w3-text-pink" style="font-size:36px"></i>
+                            </button>
+
+                            <script type="text/javascript">
+                                var val2= 0
+                                $("#btn2").click(function() {
+                                    $("#output2").html(function(i, val2) {return val2*1+1});
+                                });
+                            </script>
+                            <div id="output2">{{ val2 }}</div>
+                        </div>
+                    </div>
+                </div>
+
+<!--                 <!–– display vote counts ––>
                 <div class="row justify-content-center mt-4">
                     <div class="row">
                         <div class="col" style="text-align: center;">
@@ -107,7 +151,8 @@
                             <span class="input-group-text badge-dark mr-1">{{ poll_votes[0][1] }}</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
 
                 <!–– call existing tags ––>
                 <div class="row justify-content-center mt-4">
