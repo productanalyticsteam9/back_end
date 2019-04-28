@@ -40,7 +40,7 @@ def user_home(uuid):
     poll_r_texts = [poll.poll_text for poll in polls_r]
     poll_r_images = [poll.image_path for poll in polls_r]
     poll_r_dates = [poll.post_date for poll in polls_r]
-    poll_r_uuid = [poll.uuid for poll in polls_r]
+    poll_r_uuid = [poll.poll_uuid for poll in polls_r]
     return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, poll_dates=poll_dates, poll_r_texts=poll_r_texts, poll_r_images=poll_r_images, poll_r_dates=poll_r_dates, poll_r_uuid=poll_r_uuid)
 
 
