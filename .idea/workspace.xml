@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11d9ff39-365d-40a6-8dc2-52d3d4859864" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/back_end.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/static/styles/.Rhistory" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/templates/poll_vote.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql_query/save_result.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/poll/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/poll/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_query/connect_to_db_demo.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/sql_query/connect_to_db_demo.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/templates/poll_vote.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/templates/poll_vote.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +17,13 @@
       <file leaf-file-name="poll_vote.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/project/templates/poll_vote.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="107" column="30" lean-forward="true" selection-start-line="107" selection-start-column="30" selection-end-line="107" selection-end-column="30" />
+            <state relative-caret-position="266">
+              <caret line="76" column="43" selection-start-line="76" selection-start-column="43" selection-end-line="76" selection-end-column="43" />
               <folding>
                 <element signature="e#4759#4786#0" expanded="true" />
+                <element signature="e#4968#4995#0" expanded="true" />
                 <element signature="e#5102#5129#0" expanded="true" />
+                <element signature="e#5388#5415#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -39,8 +32,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/poll/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="27" column="13" selection-start-line="27" selection-end-line="28" />
+            <state relative-caret-position="570">
+              <caret line="38" column="49" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
               </folding>
@@ -74,8 +67,8 @@
       <file leaf-file-name="user_home.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/templates/user_home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="89" column="14" lean-forward="true" selection-start-line="74" selection-start-column="8" selection-end-line="89" selection-end-column="14" />
+            <state relative-caret-position="298">
+              <caret line="86" column="65" lean-forward="true" selection-start-line="86" selection-start-column="65" selection-end-line="86" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -225,7 +218,9 @@
           <caret line="76" column="54" lean-forward="true" selection-start-line="76" selection-start-column="54" selection-end-line="76" selection-end-column="54" />
           <folding>
             <element signature="e#4759#4786#0" expanded="true" />
+            <element signature="e#4968#4995#0" expanded="true" />
             <element signature="e#5102#5129#0" expanded="true" />
+            <element signature="e#5388#5415#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -261,17 +256,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/templates/user_home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="89" column="14" lean-forward="true" selection-start-line="74" selection-start-column="8" selection-end-line="89" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project/templates/poll.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="472">
           <caret line="92" column="30" lean-forward="true" selection-start-line="87" selection-start-column="24" selection-end-line="92" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/templates/user_home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="86" column="65" lean-forward="true" selection-start-line="86" selection-start-column="65" selection-end-line="86" selection-end-column="65" />
         </state>
       </provider>
     </entry>
@@ -287,8 +282,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/project/poll/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="27" column="13" selection-start-line="27" selection-end-line="28" />
+        <state relative-caret-position="570">
+          <caret line="38" column="49" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
           <folding>
             <element signature="e#0#97#0" expanded="true" />
           </folding>
@@ -297,11 +292,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/project/templates/poll_vote.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="107" column="30" lean-forward="true" selection-start-line="107" selection-start-column="30" selection-end-line="107" selection-end-column="30" />
+        <state relative-caret-position="266">
+          <caret line="76" column="43" selection-start-line="76" selection-start-column="43" selection-end-line="76" selection-end-column="43" />
           <folding>
             <element signature="e#4759#4786#0" expanded="true" />
+            <element signature="e#4968#4995#0" expanded="true" />
             <element signature="e#5102#5129#0" expanded="true" />
+            <element signature="e#5388#5415#0" expanded="true" />
           </folding>
         </state>
       </provider>
