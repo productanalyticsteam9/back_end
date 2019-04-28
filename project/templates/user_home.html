@@ -106,6 +106,51 @@
   </div>
 </div>
 
+<div class="container-fluid">
+  <h2 class="text-center my-3">Poll Recommend</h2>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- <div id="myCarousel1"> -->
+    <div class="carousel-inner row w-100 mx-auto">
+
+      {% for text_r in poll_r_texts %}
+        <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Poll {{ loop.index }}</h4>
+              <p class="card-text">{{ text_r }}</p>
+              <div class="row">
+                {% for path_r in poll_r_images[loop.index0] %}
+                    <div class="col">
+                      <img class="card-img-top img-thumbnail" style="height:200px; width:200px" src="{{ path_r }}" alt="poll image">
+                    </div>
+                {% endfor %}
+               
+              </div>
+               <div class="row">
+                  <a class="btn btn-outline-primary"  style="height:30px; width:200px" href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }} " role="button">check it out</a>
+                </div>
+                <small class="text-muted">{{ poll_r_dates[loop.index0] | datetimeformat }}</small>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mt-4">
+          <a class="btn btn-outline-secondary mx-1 prev" href="javascript:void(0)" title="Previous">
+            <i class="fa fa-lg fa-chevron-left"></i>
+          </a>
+          <a class="btn btn-outline-secondary mx-1 next" href="javascript:void(0)" title="Next">
+            <i class="fa fa-lg fa-chevron-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
   <script src='https://unpkg.com/popper.js@1.12.9/dist/umd/popper.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
