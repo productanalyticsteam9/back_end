@@ -65,6 +65,12 @@
   </nav>
 </section>
 
+<style>
+.card-img-top.img-thumbnail{
+  padding:2.5px
+}
+</style>
+
 <div class="container-fluid">
   <h2 class="text-center my-3">Poll History</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -73,16 +79,19 @@
 
       {% for text in poll_texts %}
         <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-          <div class="card">
+          <div class="card" style="width: 23rem; height: 25rem">
             <div class="card-body">
               <h4 class="card-title">Poll {{ loop.index }}</h4>
               <p class="card-text">{{ text }}</p>
               <div class="row">
                 {% for path in poll_images[loop.index0] %}
                     <div class="col">
-                      <img class="card-img-top img-thumbnail" style="height:200px; width:200px" src="{{ path }}" alt="poll image">
+                      <img class="card-img-top img-thumbnail" style="height:200px; width:220px" src="{{ path }}" alt="poll image">
                     </div>
                 {% endfor %}
+              </div>
+              <div class="row">
+                  <a class="btn btn-outline-primary"  style="height:30px; width:200px" href="{{ '../poll_vote/' + poll_uuid[loop.index0] }} " role="button">see result</a>
               </div>
                 <small class="text-muted">{{ poll_dates[loop.index0] | datetimeformat }}</small>
             </div>
@@ -107,28 +116,28 @@
 </div>
 
 <div class="container-fluid">
-  <h2 class="text-center my-3">Poll Recommend</h2>
+  <h2 class="text-center my-3">Poll Recommendation</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- <div id="myCarousel1"> -->
     <div class="carousel-inner row w-100 mx-auto">
 
       {% for text_r in poll_r_texts %}
         <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-          <div class="card">
+          <div class="card" style="width: 23rem; height:25rem;">
             <div class="card-body">
               <h4 class="card-title">Poll {{ loop.index }}</h4>
               <p class="card-text">{{ text_r }}</p>
               <div class="row">
                 {% for path_r in poll_r_images[loop.index0] %}
                     <div class="col">
-                      <img class="card-img-top img-thumbnail" style="height:200px; width:200px" src="{{ path_r }}" alt="poll image">
+                      <img class="card-img-top img-thumbnail" style="height:200px; width:220px" src="{{ path_r }}" alt="poll image">
                     </div>
                 {% endfor %}
                
               </div>
                <div class="row">
                   <a class="btn btn-outline-primary"  style="height:30px; width:200px" href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }} " role="button">check it out</a>
-                </div>
+              </div>
                 <small class="text-muted">{{ poll_r_dates[loop.index0] | datetimeformat }}</small>
             </div>
           </div>
