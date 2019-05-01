@@ -1,22 +1,22 @@
 (function ($) {
   "use strict";
   // Auto-scroll
-  $('#myCarousel').carousel({
+  $('.myCarousel').carousel({
     interval: 5000
   });
 
   // Control buttons
   $('.next').click(function () {
-    $('.carousel').carousel('next');
+    $(this).closest('.carousel').carousel('next');
     return false;
   });
   $('.prev').click(function () {
-    $('.carousel').carousel('prev');
+    $(this).closest('.carousel').carousel('prev');
     return false;
   });
 
   // On carousel scroll
-  $("#myCarousel").on("slide.bs.carousel", function (e) {
+  $(".myCarousel").on("slide.bs.carousel", function (e) {
     var $e = $(e.relatedTarget);
     var idx = $e.index();
     var itemsPerSlide = 3;
