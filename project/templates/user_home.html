@@ -81,7 +81,7 @@
         <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
           <div class="card" style="width: 23rem; height: 25rem">
             <div class="card-body">
-              <h4 class="card-title">Poll {{ loop.index }}</h4>
+              <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
               <p class="card-text">{{ text }}</p>
               <div class="row">
                 {% for path in poll_images[loop.index0] %}
@@ -123,9 +123,9 @@
 
       {% for text_r in poll_r_texts %}
         <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-          <div class="card" style="width: 23rem; height:25rem;">
+          <div class="card" style="width: 23rem; height: 25rem;">
             <div class="card-body">
-              <h4 class="card-title">Poll {{ loop.index }}</h4>
+              <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
               <p class="card-text">{{ text_r }}</p>
               <div class="row">
                 {% for path_r in poll_r_images[loop.index0] %}
