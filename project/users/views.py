@@ -1,9 +1,9 @@
 from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint, Response, send_file
 from flask_login import login_user, current_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
-from datetime import datetime
+from datetime import datetime, timedelta
 from uuid import uuid4
-from sqlalchemy import desc
+from sqlalchemy import desc, and_
 import requests
 import json
 
@@ -53,7 +53,7 @@ def user_home(uuid):
     current_tag = list_tags[0]
 
     # get poll text for other users
-    others_poll = Poll.query.filter(Poll.uuid != uuid)
+    others_poll = Poll.query.filter(and_(Poll.uuid != uuid,(Poll.post_date + timedelta(days=4)) > datetime.now()))
     poll_r_texts = [poll.poll_text for poll in others_poll]
     poll_r_images = [poll.image_path for poll in others_poll]
     poll_r_dates = [poll.post_date for poll in others_poll]
