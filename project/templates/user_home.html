@@ -85,7 +85,7 @@
 
         {% for text in poll_texts %}
           <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-            <div class="card" style="width: 25rem; height: 22rem">
+            <div class="card border-0" style="width: 25rem; height: 22rem; background-color: #eee6ee;">
               <div class="card-body">
                 <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
                 <p class="card-text">{{ text }}</p>
