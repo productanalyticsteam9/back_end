@@ -11,7 +11,8 @@ from .filters import datetimeformat, file_type, file_name
 from datetime import timedelta
 
 
-passwd = os.environ.get('DB_passwd')
+#passwd = os.environ.get('DB_passwd')
+passwd="admin123!$"
 
 POSTGRES_ADDRESS = "product-analytics-db-instance.cupv3jj2ht0z.us-west-2.rds.amazonaws.com"
 POSTGRES_PORT = 5432
