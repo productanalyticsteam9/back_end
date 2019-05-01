@@ -33,7 +33,8 @@ def poll_vote_result(poll_uuid):
     poll_votes = [poll.vote_cnt for poll in polls]
     poll_usertags = split_func([poll.user_tag for poll in polls])
     poll_modeltags = split_func([poll.model_tag for poll in polls])
-    uuid = [poll.uuid for poll in polls][0]
+    user = current_user
+    uuid = user.uuid
 
     return render_template("poll_vote.html",
                            form = form,
