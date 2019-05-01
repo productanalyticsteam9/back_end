@@ -85,14 +85,14 @@
 
         {% for text in poll_texts %}
           <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-            <div class="card border-0" style="width: 25rem; height: 22rem; background-color: #eee6ee;">
+            <div class="card border-0" style="width: 23rem; height: 20rem; background-color: #eee6ee;">
               <div class="card-body">
                 <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
                 <p class="card-text">{{ text }}</p>
                 <div class="row">
                   {% for path in poll_images[loop.index0] %}
                       <div class="col">
-                        <img class="card-img-top img-thumbnail" style="height:200px; width:220px" src="{{ path }}" alt="poll image">
+                        <img class="card-img-top img-thumbnail" style="height:200px; width:210px" src="{{ path }}" alt="poll image">
                       </div>
                   {% endfor %}
                 </div>
