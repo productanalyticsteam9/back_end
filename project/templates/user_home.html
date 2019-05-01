@@ -71,6 +71,7 @@
 }
 </style>
 
+<<<<<<< Updated upstream
 <div class="card bg-light text-white">
   <img class='card-img-top img-rounded' src="../static/img/user_home_bg1.jpg" >
   <div class='card-img-top-overlay'>
@@ -100,6 +101,27 @@
                     <a class="btn btn-secondary btn-sm" style="height:20px; width:150px"  href="{{ '../poll_vote/' + poll_uuid[loop.index0] }} " role="button">see result</a>
                 </div>
                   <small class="text-muted">{{ poll_dates[loop.index0] | datetimeformat }}</small>
+<div class="container-fluid">
+  <h2 class="text-center my-3">Poll History</h2>
+  <div class="carousel slide myCarousel" data-ride="carousel">
+  <!-- <div id="myCarousel1"> -->
+    <div class="carousel-inner row w-100 mx-auto">
+      {% for text in poll_texts %}
+        <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
+          <div class="card" style="width: 18rem; height: 18rem">
+            <div class="card-body">
+              <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
+              <p class="card-text">{{ text }}</p>
+              <div class="row">
+                {% for path in poll_images[loop.index0] %}
+                    <div class="col">
+                      <img class="card-img-top img-thumbnail" style="height:120px; width:160px" src="{{ path }}" alt="poll image">
+                    </div>
+                {% endfor %}
+              </div>
+              <div class="row">
+                  <a class="btn btn-outline-primary"  style="height:30px; width:200px" href="{{ '../poll_vote/' + poll_uuid[loop.index0] }} " role="button">see result</a>
+
               </div>
             </div>
           </div>
@@ -116,6 +138,18 @@
               <i class="fa fa-lg fa-chevron-right" style="color:#8a9a9e"></i>
             </a>
           </div>
+
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mt-4">
+          <a class="btn btn-outline-secondary btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
+            <i class="fa fa-lg fa-chevron-left"></i>
+          </a>
+          <a class="btn btn-outline-secondary btn-sm mx-1 next" href="javascript:void(0)" title="Next">
+            <i class="fa fa-lg fa-chevron-right"></i>
+          </a>
+
         </div>
       </div>
     </div>
@@ -148,10 +182,34 @@
                     <a class="btn btn-primary btn-sm"  style="height:20px; width:150px" href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }} " role="button">check it out</a>
                 </div>
                   <small class="text-light">{{ poll_r_dates[loop.index0] | datetimeformat }}</small>
+<div class="container-fluid">
+  <h2 class="text-center my-3">Poll Recommendation</h2>
+  <div class="carousel slide myCarousel" data-ride="carousel">
+  <!-- <div id="myCarousel1"> -->
+    <div class="carousel-inner row w-100 mx-auto">
+      <h4>
+      {% for text_r in poll_r_texts %}
+    </h4>
+        <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
+          <div class="card" style="width: 23rem; height: 22rem;">
+            <div class="card-body">
+              <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
+              <p class="card-text">{{ text_r }}</p>
+              <div class="row">
+                {% for path_r in poll_r_images[loop.index0] %}
+                    <div class="col">
+                      <img class="card-img-top img-thumbnail" style="height:200px; width:230px" src="{{ path_r }}" alt="poll image">
+                    </div>
+                {% endfor %}
+               
+              </div>
+               <div class="row">
+                  <a class="btn btn-outline-primary"  style="height:30px; width:200px" href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }} " role="button">check it out</a>
               </div>
             </div>
           </div>
         {% endfor %}
+
 
       </div>
       <div class="container">
@@ -164,6 +222,18 @@
               <i class="fa fa-lg fa-chevron-right" style="color:white"></i>
             </a>
           </div>
+
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mt-4">
+          <a class="btn btn-outline-secondary btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
+            <i class="fa fa-lg fa-chevron-left"></i>
+          </a>
+          <a class="btn btn-outline-secondary btn-sm mx-1 next" href="javascript:void(0)" title="Next">
+            <i class="fa fa-lg fa-chevron-right"></i>
+          </a>
+
         </div>
       </div>
     </div>
