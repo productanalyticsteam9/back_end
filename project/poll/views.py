@@ -13,42 +13,42 @@ from .forms import PollForm
 poll_blueprint = Blueprint('poll', __name__)
 
 def split_func(a):
-    split_a = re.split('{|,|}|! ',a[0])
+    split_a = re.split('{|,|}|! ',a)
     return [item for item in split_a if item is not '']
-
-
-def update_count(polls, poll_votes):
-    polls.update().where().values(vote_cnt = poll_votes)
-    db.commit()
 
 @poll_blueprint.route("/poll_vote/<poll_uuid>", methods = ['GET', 'POST'])
 @login_required
 def poll_vote_result(poll_uuid):
-    model_tags = []
-    form = PollForm(request.form)
-    polls = Poll.query.filter_by(poll_uuid=poll_uuid).all()
-    poll_texts = [poll.poll_text for poll in polls]
-    poll_images = [poll.image_path for poll in polls]
-    poll_dates = [poll.post_date for poll in polls]
-    poll_votes = [poll.vote_cnt for poll in polls]
-    poll_usertags = split_func([poll.user_tag for poll in polls])
-    poll_modeltags = split_func([poll.model_tag for poll in polls])
-    user = current_user
-    uuid = user.uuid
+    poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
+    print(poll.vote_cnt)
+    poll_usertags = split_func(poll.user_tag)
+    poll_modeltags = split_func(poll.model_tag)
 
     return render_template("poll_vote.html",
-                           form = form,
-                           polls = polls,
-                           uuid = uuid,
-                           model_tags = model_tags,
-                           poll_texts=poll_texts,
-                           poll_images=poll_images,
-                           poll_dates=poll_dates,
+                           uuid=current_user.uuid,
+                           poll_uuid=poll_uuid,
+                           poll_text=poll.poll_text,
+                           poll_images=poll.image_path,
                            poll_usertags=poll_usertags,
                            poll_modeltags=poll_modeltags,
-                           poll_votes=poll_votes)
+                           poll_votes=poll.vote_cnt)
 
+@poll_blueprint.route("/upvote/<poll_uuid>/<image_id>", methods=['GET', 'POST'])
+@login_required
+def upvote(poll_uuid, image_id):
+    try:
+        poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
+        votes = poll.vote_cnt
+        votes[int(image_id)-1] += 1
+        db.session.query(Poll).filter_by(poll_uuid=poll_uuid).update({Poll.vote_cnt: votes})
+        db.session.commit()
+        flash("Thank you for voting!", 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(e, 'error')
 
+    #return json.dumps({'vote_cnt': votes})
+    return redirect(url_for("poll.poll_vote_result", poll_uuid=poll_uuid))
 
 @poll_blueprint.route("/submit_poll", methods=["GET", "POST"])
 @login_required
