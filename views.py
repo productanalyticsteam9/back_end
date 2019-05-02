@@ -1,9 +1,9 @@
-from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint, jsonify
+from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint
 from flask_login import login_user, current_user, login_required, logout_user
 from datetime import datetime
 import boto3
 from ..upload_to_s3.config import S3_BUCKET
-import re, itertools, random, json
+import re, itertools, random
 
 from .. import app, db
 from ..models import Poll
@@ -16,7 +16,7 @@ def split_func(a):
     split_a = re.split('{|,|}|! ',a)
     return [item for item in split_a if item is not '']
 
-@poll_blueprint.route("/poll_vote/<poll_uuid>", methods=['GET', 'POST'])
+@poll_blueprint.route("/poll_vote/<poll_uuid>", methods = ['GET', 'POST'])
 @login_required
 def poll_vote_result(poll_uuid):
     poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
@@ -60,16 +60,18 @@ def submit_poll():
     file_urls = session['file_urls']
 
     model_tag_lst = []
-    client = boto3.client('rekognition') # ML model client
-    for url in file_urls:
-        f_path = url.split('com/')[1].split('?')[0]
-        response = client.detect_labels(Image={
-                        'S3Object': {'Bucket': S3_BUCKET,
-                                        'Name': f_path}
-                        })
-        tags = [dic['Name'] for dic in response['Labels']]
-        model_tag_lst.append(tags)
-    model_tags = random.sample(set(itertools.chain(*model_tag_lst)), 4)
+    # client = boto3.client('rekognition') # ML model client
+    # for url in file_urls:
+    #     f_path = url.split('com/')[1].split('?')[0]
+    #     response = client.detect_labels(Image={
+    #                     'S3Object': {'Bucket': S3_BUCKET,
+    #                                     'Name': f_path}
+    #                     })
+    #     tags = [dic['Name'] for dic in response['Labels']]
+    #     model_tag_lst.append(tags)
+    # model_tags = random.sample(set(itertools.chain(*model_tag_lst)), 4)
+    model_tags = []
+
     if request.method == "POST":
         if form.validate_on_submit():
             try:
@@ -90,8 +92,7 @@ def submit_poll():
                     user_tag = []
 
                 poll = Poll(poll_text=poll_text, poll_uuid=poll_uuid, uuid=uuid,
-                            image_id=image_id, image_path=image_path, user_tag=user_tag,
-                            model_tag=model_tags, vote_cnt=[0]*len(image_path))
+                            image_id=image_id, image_path=image_path)
                 poll.user_tag = user_tag
                 poll.model_tag = model_tags
                 db.session.add(poll)

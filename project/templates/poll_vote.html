@@ -74,37 +74,59 @@
             <i class="fas fa-search" aria-hidden="true"></i>
         </form>               
     </nav> -->
-        <div class="container-fluid">
-            <div class="row justify-content-center mt-4">
-                <h4>{{ poll_text }}</h4>
-            </div>
+    <div class="card bg-light text-white">
+      <img class='card-img-top img-rounded' src="../static/img/vote_bg.jpg" >
+      <div class='card-img-overlay'>
 
-            <!-- call images with -->
-            {% for path in poll_images %}
-            <div class="row justify-content-center mt-4">
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <img src="{{ path }}" class="card-img-top" style="height: 18rem;">
-                        <div class="card-body"></div>
-                    </div>
+            <div class="container-fluid">
+                <div class="row justify-content-center mt-4">
+                    <h2>{{ poll_text }}</h2>
+                </div>
+
+                <!-- call images with -->
+                <div class="row justify-content-center mt-4">
+                    {% for path in poll_images %}
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <img src="{{ path }}" class="card-img-top" style="height: 18rem;">
+                                <div class="card-body"></div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
 
-            <!-- vote buttons -->
-            <div class="row justify-content-center mt-8">
-                <span class="col-12 col-md-3" style="text-align: center;">
-                    <a href="/upvote/{{ poll_uuid }}/{{ loop.index }}">
-                        <button type="submit"
-                                id = "btn{{ loop.index }}"
-                                class="btn">
-                                <i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
-                        </button>
-                    </a>
+                <!-- vote buttons -->
+                <div class="row justify-content-center mt-8">
+                    {% for path in poll_images %}
+                    <span class="col-12 col-md-3" style="text-align: center;">
+                        <a href="/upvote/{{ poll_uuid }}/{{ loop.index }}">
+                            <button type="submit"
+                                    id = "btn{{ loop.inbdex }}"
+                                    class="btn">
+                                    <i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
+                            </button>
+                        </a>
 
-                    <div>{{ poll_votes[loop.index0] }}</div>
-                </span>
-            </div>
-            {% endfor %}
+                        <div>{{ poll_votes[loop.index0] }}</div>
+                    </span>
+                    {% endfor %}
+                </div>
+
+                <!--                 
+                <div class="row justify-content-center mt-4">
+                    <span class="input-group-text badge-secondary mr-2">User Tag</span>
+                    {% for tag in poll_usertags %}
+                        <span class="input-group-text badge-light mr-2">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="row justify-content-center mt-4">
+                    <span class="input-group-text badge-secondary mr-2">Model Tag</span>
+                    {% for tag in poll_modeltags %}
+                        <span class="input-group-text badge-light mr-2">{{ tag }}</span>
+                    {% endfor %}
+                </div> -->
 
             <div class="row justify-content-center mt-4">
                 <h6><span class="input-group-text badge-secondary mr-2">Tags</span></h6>
@@ -147,6 +169,8 @@
                 {% endfor %}
             </div>
         </div>
+    </div>
+    </div>
 
     <!-- mobirise scripts -->
     <script src="../static/assets/web/assets/jquery/jquery.min.js"></script>
