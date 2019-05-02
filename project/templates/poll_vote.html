@@ -27,7 +27,7 @@
 
 {% block body %}
 <section class="menu cid-qTkzRZLJNu" once="menu" id="head">
-        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm" style="background-color:#563d7c">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="hamburger">
                     <span></span>
@@ -74,12 +74,12 @@
             <i class="fas fa-search" aria-hidden="true"></i>
         </form>               
     </nav> -->
-    <div class="card bg-light text-white">
-      <img class='card-img-top img-rounded' src="../static/img/vote_bg.jpg" >
+    <div class="card bg-light border-0" style="color:#563d7c">
+      <img class='card-img-top img-rounded' src="../static/img/vote_bg3.png" >
       <div class='card-img-overlay'>
 
             <div class="container-fluid">
-                <div class="row justify-content-center mt-4">
+                <div class="row justify-content-center mt-4" >
                     <h2>{{ poll_text }}</h2>
                 </div>
 
@@ -87,7 +87,7 @@
                 <div class="row justify-content-center mt-4">
                     {% for path in poll_images %}
                         <div class="col-md-3">
-                            <div class="card text-center">
+                            <div class="card text-center border-0">
                                 <img src="{{ path }}" class="card-img-top" style="height: 18rem;">
                                 <div class="card-body"></div>
                             </div>
@@ -138,12 +138,12 @@
                 </div> -->
 
                 <div class="row justify-content-center mt-4">
-                    <h6><span class="input-group-text badge-secondary mr-2">Tags</span></h6>
+                    <h6><span class="input-group-text badge-secondary border-0 mr-2">Tags</span></h6>
                     {% for tag in poll_usertags %}
-                        <h6><span class="input-group-text badge-light mr-2">{{ tag }}</span></h6>
+                        <h6><span class="input-group-text badge-light border-0 mr-2">{{ tag }}</span></h6>
                     {% endfor %}
                     {% for tag in poll_modeltags %}
-                        <h6><span class="input-group-text badge-light mr-2">{{ tag }}</span></h6>
+                        <h6><span class="input-group-text badge-light border-0 mr-2">{{ tag }}</span></h6>
                     {% endfor %}
                 </div>
 
