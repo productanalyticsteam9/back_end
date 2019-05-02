@@ -83,8 +83,8 @@ def user_home(uuid):
     poll_r_uuid = [poll[4] for poll in top_5]
 
     return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, 
-    poll_dates=poll_dates, poll_uuid=poll_uuid, poll_r_texts=poll_r_texts, 
-    poll_r_images=poll_r_images, poll_r_dates=poll_r_dates, poll_r_uuid=poll_r_uuid)
+                           poll_dates=poll_dates, poll_uuid=poll_uuid, poll_r_texts=poll_r_texts, 
+                           poll_r_images=poll_r_images, poll_r_dates=poll_r_dates, poll_r_uuid=poll_r_uuid)
 
 
 @users_blueprint.route("/login", methods=["GET", "POST"])
