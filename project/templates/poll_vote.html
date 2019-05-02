@@ -78,17 +78,14 @@
       <img class='card-img-top img-rounded' src="../static/img/vote_bg.jpg" >
       <div class='card-img-overlay'>
 
-        <div class="container-fluid">
-            <form action="" name="poll-form" method="POST">
+            <div class="container-fluid">
                 <div class="row justify-content-center mt-4">
-                    {% for title in poll_texts %}
-                        <h4>{{ title }}</h4>
-                    {% endfor %}
+                    <h2>{{ poll_text }}</h2>
                 </div>
 
-                <!–– call images with ––>
+                <!-- call images with -->
                 <div class="row justify-content-center mt-4">
-                    {% for path in poll_images[0] %}
+                    {% for path in poll_images %}
                         <div class="col-md-3">
                             <div class="card text-center">
                                 <img src="{{ path }}" class="card-img-top" style="height: 18rem;">
@@ -98,41 +95,32 @@
                     {% endfor %}
                 </div>
 
-                <!–– vote buttons ––>
+                <!-- vote buttons -->
                 <div class="row justify-content-center mt-8">
                     <span class="col-12 col-md-3" style="text-align: center;">
-                        <button type="button"
-                                id = "btn1"
-                                class="btn">
-                                <i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
-                        </button>
+                        <a href="/upvote/{{ poll_uuid }}/1">
+                            <button type="submit"
+                                    id = "btn1"
+                                    class="btn">
+                                    <i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
+                            </button>
+                        </a>
 
-                        <script type="text/javascript">
-                                var val=0
-                                $("#btn1").click(function() {
-                                $("#output1").html(function(i, val) {return +val+1});
-                                });
-                        </script>
-                        <div id="output1">{{ poll_votes[0][0] | safe }}</div>
+                        <div>{{ poll_votes[0] }}</div>
                     </span>
                     <span class="col-12 col-md-3" style="text-align: center;">
-                        <button type="button"
-                                id = "btn2"
-                                class="btn"
-                                {# style="width:50%" #}
-                                {# data-loading-text="...">5 #}
-                                ><i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
-                        </button>
+                        <a href="/upvote/{{ poll_uuid }}/2">
+                            <button type="submit"
+                                    id = "btn2"
+                                    class="btn">
+                                    <i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
+                            </button>
+                        </a>
 
-                        <script type="text/javascript">
-                                var val2= 0
-                                $("#btn2").click(function() {
-                                $("#output2").html(function(i, val2) {return val2*1+1});
-                                });
-                        </script>
-                        <div id="output2">{{ poll_votes[0][1] | safe }}</div>
+                        <div>{{ poll_votes[1] }}</div>
                     </span>
                 </div>
+
 
                 <!–– call existing tags ––>
 <!--                 <div class="row justify-content-center mt-4">
