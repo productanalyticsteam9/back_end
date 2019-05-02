@@ -75,87 +75,47 @@
         </form>               
     </nav> -->
         <div class="container-fluid">
-            <form action="" name="poll-form" method="POST">
-                <div class="row justify-content-center mt-4">
-                    {% for title in poll_texts %}
-                        <h4>{{ title }}</h4>
-                    {% endfor %}
-                </div>
+            <div class="row justify-content-center mt-4">
+                <h4>{{ poll_text }}</h4>
+            </div>
 
-                <!–– call images with ––>
-                <div class="row justify-content-center mt-4">
-                    {% for path in poll_images[0] %}
-                        <div class="col-md-3">
-                            <div class="card text-center">
-                                <img src="{{ path }}" class="card-img-top" style="height: 18rem;">
-                                <div class="card-body"></div>
-                            </div>
-                        </div>
-                    {% endfor %}
+            <!-- call images with -->
+            {% for path in poll_images %}
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <img src="{{ path }}" class="card-img-top" style="height: 18rem;">
+                        <div class="card-body"></div>
+                    </div>
                 </div>
+            </div>
 
-                <!–– vote buttons ––>
-                <div class="row justify-content-center mt-8">
-                    <span class="col-12 col-md-3" style="text-align: center;">
-                        <button type="button"
-                                id = "btn1"
+            <!-- vote buttons -->
+            <div class="row justify-content-center mt-8">
+                <span class="col-12 col-md-3" style="text-align: center;">
+                    <a href="/upvote/{{ poll_uuid }}/{{ loop.index }}">
+                        <button type="submit"
+                                id = "btn{{ loop.index }}"
                                 class="btn">
                                 <i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
                         </button>
+                    </a>
 
-                        <script type="text/javascript">
-                                var val=0
-                                $("#btn1").click(function() {
-                                $("#output1").html(function(i, val) {return +val+1});
-                                });
-                        </script>
-                        <div id="output1">{{ poll_votes[0][0] | safe }}</div>
-                    </span>
-                    <span class="col-12 col-md-3" style="text-align: center;">
-                        <button type="button"
-                                id = "btn2"
-                                class="btn"
-                                {# style="width:50%" #}
-                                {# data-loading-text="...">5 #}
-                                ><i class="fa fa-heart w3-text-pink" style="font-size:30px"></i>
-                        </button>
+                    <div>{{ poll_votes[loop.index0] }}</div>
+                </span>
+            </div>
+            {% endfor %}
 
-                        <script type="text/javascript">
-                                var val2= 0
-                                $("#btn2").click(function() {
-                                $("#output2").html(function(i, val2) {return val2*1+1});
-                                });
-                        </script>
-                        <div id="output2">{{ poll_votes[0][1] | safe }}</div>
-                    </span>
-                </div>
+            <div class="row justify-content-center mt-4">
+                <h6><span class="input-group-text badge-secondary mr-2">Tags</span></h6>
+                {% for tag in poll_usertags %}
+                    <h6><span class="input-group-text badge-light mr-2">{{ tag }}</span></h6>
+                {% endfor %}
+                {% for tag in poll_modeltags %}
+                    <h6><span class="input-group-text badge-light mr-2">{{ tag }}</span></h6>
+                {% endfor %}
+            </div>
 
-                <!–– call existing tags ––>
-<!--                 <div class="row justify-content-center mt-4">
-                    <span class="input-group-text badge-secondary mr-2">User Tag</span>
-                    {% for tag in poll_usertags %}
-                        <span class="input-group-text badge-light mr-2">{{ tag }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="row justify-content-center mt-4">
-                    <span class="input-group-text badge-secondary mr-2">Model Tag</span>
-                    {% for tag in poll_modeltags %}
-                        <span class="input-group-text badge-light mr-2">{{ tag }}</span>
-                    {% endfor %}
-                </div> -->
-
-                <div class="row justify-content-center mt-4">
-                    <h6><span class="input-group-text badge-secondary mr-2">Tags</span></h6>
-                    {% for tag in poll_usertags %}
-                        <h6><span class="input-group-text badge-light mr-2">{{ tag }}</span></h6>
-                    {% endfor %}
-                    {% for tag in poll_modeltags %}
-                        <h6><span class="input-group-text badge-light mr-2">{{ tag }}</span></h6>
-                    {% endfor %}
-                </div>
-
-            </form>
         </div>
 
         <br />
@@ -188,10 +148,30 @@
             </div>
         </div>
 
-    <!-- mobirise Scripts -->
+    <!-- mobirise scripts -->
     <script src="../static/assets/web/assets/jquery/jquery.min.js"></script>
     <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="../static/assets/dropdown/js/script.min.js"></script>
     <script src="../static/assets/bootstrapcarouselswipe/bootstrap-carousel-swipe.js"></script>
     <script src="../static/assets/touchswipe/jquery.touch-swipe.min.js"></script>
+
+    <!-- custom scripts -->
+    <!-- <script type='text/javascript'>
+        var cnt = '{{ item_cnt }}';
+        var poll_uuid = '{{ poll_uuid }}';
+        var arr = [];
+        for (var i = 0; i < cnt; i++) {
+            arr.push(i+1);
+        };
+        $.each(arr, function(i, val) {
+            $('#btn'+val).click(function() {
+                console.log('button clicked!')
+                $.post("/upvote/" + poll_uuid + "/" + i, function( data ) {
+                    alert(data);
+                    // window.location.reload();
+                });
+            });
+        });
+    </script> -->
+        
 {% endblock %}
