@@ -17,8 +17,12 @@
 {% endblock %}
 
 {% block body %}
+<div class="card border-0 bg-light text-white">
+  <img class='card-img-top img-rounded' src="../static/img/upload_bg2.jpg" >
+  <div class='card-img-overlay'>
+
     <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-4">
-        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm" style="background-color:#563d7c">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="hamburger">
                     <span></span>
@@ -69,7 +73,7 @@
                         <br></br>
                         <p>{{ form.upload(multiple="multiple") }}</p>
                         <br></br>
-                        <button class="btn btn-primary" type='submit'>Upload</button>
+                        <button class="btn border-0" type='submit' style="background-color:#563d7c; color:white;">Upload</button>
                     </form>
                 </div>
             </div>
@@ -89,6 +93,7 @@
             {% endfor %}
         </div>
     </div>
+</div>
 
     <!-- mobirise Scripts -->
     <script src="../static/assets/web/assets/jquery/jquery.min.js"></script>
