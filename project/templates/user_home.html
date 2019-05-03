@@ -24,6 +24,12 @@
 {% block body %}
 <section class="menu cid-qTkzRZLJNu" once="menu" id="head">
   <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm" style="background-color:#563d7c">
+      <a href="/">
+                    <img src="../static/assets/images/logo.png" style="height: 3.6rem; margin-left:50px">
+                    <a href="/"> 
+                    <img src="../static/assets/images/logo_text.png" style="height: 3.6rem;"
+                    > 
+      </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <div class="hamburger">
               <span></span>
@@ -32,7 +38,7 @@
               <span></span>
           </div>
       </button>
-      <div class="menu-logo">
+<!--       <div class="menu-logo">
           <div class="navbar-brand">
               <span class="navbar-logo">
                   <a href="/">
@@ -40,7 +46,7 @@
                   </a>
               </span>
           </div>
-      </div>
+      </div> -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
               <li class="nav-item">
@@ -78,7 +84,7 @@
 
 <div class="card border-0" style="background-color: #f7f7f9; color:#656765;">
   <div class="container-fluid">
-    <h2 class="text-center my-3">Poll History</h2>
+    <h2 class="text-center my-3">History</h2>
     <div class="carousel slide myCarousel" data-ride="carousel">
     <!-- <div id="myCarousel1"> -->
       <div class="carousel-inner row w-100 mx-auto">
@@ -125,16 +131,16 @@
 </div>
 
 
-<div class="card border-0" style="background-color: #eee6ee; color:#656765;">
+<div class="card border-0" style="background-color: white; color:#656765;">
   <div class="container-fluid">
-    <h2 class="text-center my-3">Poll Recommendation</h2>
+    <h2 class="text-center my-3">Recommendation</h2>
     <div class="carousel slide myCarousel" data-ride="carousel">
     <!-- <div id="myCarousel1"> -->
       <div class="carousel-inner row w-100 mx-auto">
 
         {% for text_r in poll_r_texts %}
           <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-            <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #eee6ee;">
+            <div class="card border-0" style="width: 25rem; height: 23rem; background-color: white;">
               <div class="card-body">
                 <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
                 <p class="card-text">{{ text_r }}</p>
@@ -146,7 +152,7 @@
                   {% endfor %}
                  
                 </div>
-                <div class="card-footer text-center border-0" style="background-color: #eee6ee;">
+                <div class="card-footer text-center border-0" style="background-color: white;">
                     <a class="btn btn-sm"  style="height:20px; width:150px; background-color: #563d7c; color: white;" href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }} " role="button">check it out</a>
                 </div>
                   <small class="text" style="color:#656765;">{{ poll_r_dates[loop.index0] | datetimeformat }}</small>
