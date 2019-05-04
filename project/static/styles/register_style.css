@@ -9,7 +9,9 @@ body{
     /* color: #212529; */
     text-align: left;
     /* background-color: #f5f8fa; */
-    background-color: #C0C0C0; 
+    /* background-color: #C0C0C0; */
+    background-image: url("../img/grey3.jpg");
+    background-size: cover;
 }
 
 .navbar-laravel
