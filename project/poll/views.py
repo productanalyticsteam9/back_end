@@ -6,8 +6,9 @@ from ..upload_to_s3.config import S3_BUCKET
 import re, itertools, random, json
 
 from .. import app, db
-from ..models import Poll
+from ..models import Poll, Voted_Poll
 from .forms import PollForm
+from sqlalchemy import and_
 
 
 poll_blueprint = Blueprint('poll', __name__)
@@ -15,6 +16,7 @@ poll_blueprint = Blueprint('poll', __name__)
 def split_func(a):
     split_a = re.split('{|,|}|! ',a)
     return [item for item in split_a if item is not '']
+
 
 @poll_blueprint.route("/poll_vote/<poll_uuid>", methods=['GET', 'POST'])
 @login_required
@@ -32,22 +34,30 @@ def poll_vote_result(poll_uuid):
                            poll_modeltags=poll_modeltags,
                            poll_votes=poll.vote_cnt)
 
+
 @poll_blueprint.route("/upvote/<poll_uuid>/<image_id>", methods=['GET', 'POST'])
 @login_required
 def upvote(poll_uuid, image_id):
     try:
         poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
-        votes = poll.vote_cnt
-        votes[int(image_id)-1] += 1
-        db.session.query(Poll).filter_by(poll_uuid=poll_uuid).update({Poll.vote_cnt: votes})
-        db.session.commit()
-        flash("Thank you for voting!", 'success')
+        voted = Voted_Poll.query.filter_by(uuid=current_user.uuid).first()
+        voted_polls = voted.voted_polls
+        if poll.poll_uuid not in voted_polls:
+            votes = poll.vote_cnt
+            votes[int(image_id)-1] += 1
+            voted_polls.append(poll.poll_uuid)
+            db.session.query(Poll).filter_by(poll_uuid=poll_uuid).update({Poll.vote_cnt: votes})
+            db.session.query(Voted_Poll).filter_by(uuid=current_user.uuid).update({Voted_Poll.voted_polls: voted_polls})
+            db.session.commit()
+            flash("Thank you for voting!", 'success')
+        else:
+            flash("You have voted, thank you for participating.", "success")
     except Exception as e:
         db.session.rollback()
         flash(e, 'error')
 
-    #return json.dumps({'vote_cnt': votes})
     return redirect(url_for("poll.poll_vote_result", poll_uuid=poll_uuid))
+
 
 @poll_blueprint.route("/submit_poll", methods=["GET", "POST"])
 @login_required
@@ -91,6 +101,12 @@ def submit_poll():
                 poll = Poll(poll_text=poll_text, poll_uuid=poll_uuid, uuid=uuid,
                             image_id=image_id, image_path=image_path, user_tag=user_tag,
                             model_tag=model_tags, vote_cnt=[0]*len(image_path))
+                
+                voted = Voted_Poll.query.filter_by(uuid=uuid).first()
+                if not voted:
+                    voted_poll = Voted_Poll(uuid=uuid, voted_polls=[])
+                    db.session.add(voted_poll)
+
                 poll.user_tag = user_tag
                 poll.model_tag = model_tags
                 db.session.add(poll)

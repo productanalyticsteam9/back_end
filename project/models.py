@@ -85,7 +85,7 @@ class Poll(db.Model):
     vote_cnt = db.Column(postgresql.ARRAY(Integer))
     post_date = db.Column(db.DateTime)
     user_tag = db.Column(db.String(80))
-    model_tag = db.Column(db.String(80))   
+    model_tag = db.Column(db.String(80))
 
     def __init__(self, poll_text, poll_uuid, uuid, image_id, image_path, user_tag, model_tag, vote_cnt):
         self.poll_text = poll_text
@@ -104,9 +104,20 @@ class Rec_Poll(db.Model):
     __tablename__ = schema+'.'+'rec_poll'
 
     uuid = db.Column(db.String(100), primary_key=True)
-    recommend_polls = db.Column(postgresql.ARRAY(String), nullable=False) 
+    recommend_polls = db.Column(postgresql.ARRAY(String), server_default="{}") 
 
     def __init__(self, uuid, recommend_polls):
         self.uuid = uuid
         self.recommend_polls = recommend_polls
 
+
+class Voted_Poll(db.Model):
+
+    __tablename__ = schema+'.'+'voted_poll'
+
+    uuid = db.Column(db.String(100), primary_key=True)
+    voted_polls = db.Column(postgresql.ARRAY(String), server_default="{}")
+
+    def __init__(self, uuid, voted_polls):
+        self.uuid = uuid
+        self.voted_polls = voted_polls
