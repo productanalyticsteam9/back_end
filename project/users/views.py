@@ -38,7 +38,7 @@ def user_home(uuid):
     poll_dates = [poll.post_date for poll in polls]
     poll_uuids = [poll.poll_uuid for poll in polls]
 
-    rec_polls = Rec_Poll.query.filter_by(uuid=uuid).all()
+    rec_polls = Rec_Poll.query.filter_by(uuid=uuid).first()
 
     # retrieve the recommended polls
     poll_r_texts = []
@@ -46,8 +46,8 @@ def user_home(uuid):
     poll_r_dates = []
     poll_r_uuids = []
 
-    for poll_uuid in rec_polls:
-        poll = Poll.query.filter(and_(uuid=uuid, poll_uuid=poll_uuid)).first()
+    for poll_uuid in rec_polls.recommend_polls:
+        poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
         poll_r_texts.append(poll.poll_text)
         poll_r_images.append(poll.image_path)
         poll_r_dates.append(poll.post_date)
