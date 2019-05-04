@@ -71,32 +71,32 @@
   <div class="container-fluid">
     <h2 class="text-center my-3">History</h2>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner row w-100 mx-auto">
 
-          {% for text in poll_texts %}
-          <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-            <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #f7f7f9;">
-              <div class="card-body">
-                <p class="card-text">{{ text }}</p>
-                <div class="row">
-                  {% for path in poll_images[loop.index0] %}
-                      <div class="col">
-                        <img class="card-img-top img-thumbnail border-0" style="height:200px; width:220px" src="{{ path }}" alt="poll image">
-                      </div>
-                  {% endfor %}
-                </div>
-                <div class="card-footer text-center border-0" style="background-color: #f7f7f9;">
-                    <a class="btn btn-sm" style="height:20px; width:150px; background-color:#563d7c; color:white;"  href="{{ '../poll_vote/' + poll_uuid[loop.index0] }}" role="button">see result</a>
-                </div>
-                  <small class="text" style="color:#656765;">{{ poll_dates[loop.index0] | datetimeformat }}</small>
+        <div class="carousel-inner row w-100 mx-auto">
+        {% for text in poll_texts %}
+        <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
+          <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #f7f7f9;">
+            <div class="card-body">
+              <p class="card-text">{{ text }}</p>
+              <div class="row">
+                {% for path in poll_images[loop.index0] %}
+                    <div class="col">
+                      <img class="card-img-top img-thumbnail border-0" style="height:200px; width:220px" src="{{ path }}" alt="poll image">
+                    </div>
+                {% endfor %}
               </div>
+              <div class="card-footer text-center border-0" style="background-color: #f7f7f9;">
+                  <a class="btn btn-sm" style="height:20px; width:150px; background-color:#563d7c; color:white;"  href="{{ '../poll_vote/' + poll_uuid[loop.index0] }}" role="button">see result</a>
+              </div>
+                <small class="text" style="color:#656765;">{{ poll_dates[loop.index0] | datetimeformat }}</small>
             </div>
           </div>
-          {% endfor %}
+        </div>
+        {% endfor %}
         </div>
       
         <div class="container">
-          <div class="row">
+        <div class="row">
             <div class="col-12 text-center mt-4">
               <a class="btn btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
                 <i class="fa fa-caret-left" style="color:#c8cbce; font-size:28px"></i>
@@ -105,9 +105,9 @@
                 <i class="fa fa-caret-right" style="color:#c8cbce; font-size:28px"></i>
               </a>
             </div>
-          </div>
         </div>
-        
+        </div>
+
     </div>
   </div>
 </div> 
