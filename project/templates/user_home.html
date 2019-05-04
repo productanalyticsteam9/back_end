@@ -62,17 +62,19 @@
    </nav>
 </section>
 
+<!-- header image -->
 <div class="card border-0 bg-light text-white">
   <img class='card-img-top img-rounded' src="../static/img/user_home_bg9.jpg" >
   <div class='card-img-top-overlay'></div>
 </div>
 
+<!-- history polls -->
 <div class="card border-0" style="background-color: #f7f7f9; color:#656765;">
   <div class="container-fluid">
     <h2 class="text-center my-3">History</h2>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-        <div class="carousel-inner row w-100 mx-auto">
+      <div class="carousel-inner row w-100 mx-auto">
         {% for text in poll_texts %}
         <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
           <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #f7f7f9;">
@@ -93,9 +95,9 @@
           </div>
         </div>
         {% endfor %}
-        </div>
+      </div>
       
-        <div class="container">
+      <div class="container">
         <div class="row">
             <div class="col-12 text-center mt-4">
               <a class="btn btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
@@ -106,12 +108,13 @@
               </a>
             </div>
         </div>
-        </div>
+      </div>
 
     </div>
   </div>
 </div> 
 
+<!-- recommended polls -->
 <div class="card border-0" style="background-color: white; color:#656765;">
   <div class="container-fluid">
     <h2 class="text-center my-3">Recommendation</h2>
