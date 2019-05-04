@@ -27,9 +27,9 @@
         // append slides to end 
         console.log(i)
         if (e.direction == "left") {
-          $("#myCarousel .carousel-item").eq(i).appendTo(".carousel-inner");
+          $("#myCarousel .carousel-item").eq(i).appendTo("#myCarousel .carousel-inner");
         } else {
-          $("#myCarousel .carousel-item").eq(0).appendTo(".carousel-inner");
+          $("#myCarousel .carousel-item").eq(0).appendTo("#myCarousel .carousel-inner");
         }
       }
     }
@@ -45,9 +45,9 @@
       for (var i = 0; i < it; i++) {
         // append slides to end 
         if (e.direction == "left") {
-          $("#myCarousel1 .carousel-item").eq(i).appendTo(".carousel-inner");
+          $("#myCarousel1 .carousel-item").eq(i).appendTo("#myCarousel1 .carousel-inner");
         } else {
-          $("#myCarousel1 .carousel-item").eq(0).appendTo(".carousel-inner");
+          $("#myCarousel1 .carousel-item").eq(0).appendTo("#myCarousel1 .carousel-inner");
         }
       }
     }
