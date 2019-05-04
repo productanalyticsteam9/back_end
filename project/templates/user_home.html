@@ -63,8 +63,7 @@
 <!-- header image -->
 <div class="card border-0 bg-light text-white">
   <img class='card-img-top img-rounded' src="../static/img/user_home_bg9.jpg" >
-  <div class='card-img-top-overlay'></div>
-</div>
+  <div class='card-img-top-overlay'>
 
 <!-- history polls -->
 <div class="card border-0" style="background-color: #f7f7f9; color:#656765;">
@@ -75,7 +74,7 @@
       <div class="carousel-inner row w-100 mx-auto">
         {% for text in poll_texts %}
         <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-          <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #f7f7f9;">
+          <div class="card border-0" style="background-color: #f7f7f9;">
             <div class="card-body">
               <p class="card-text">{{ text }}</p>
               <div class="row">
@@ -121,7 +120,7 @@
 
           {% for text in poll_r_texts %}
           <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-            <div class="card border-0" style="width: 25rem; height: 23rem; background-color:white;">
+            <div class="card border-0" style="background-color:white;">
               <div class="card-body">
                 <p class="card-text">{{ text }}</p>
                 <div class="row">
@@ -158,6 +157,8 @@
   </div>
 </div>
 
+</div>
+</div>
 
   <br />
   <div class="container">
