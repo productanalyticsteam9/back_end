@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from uuid import uuid4
 from sqlalchemy import desc, and_
 import requests
-import json
+import json, random, itertools
 
 from .. import app, db
 from ..models import User, Poll
@@ -42,49 +42,40 @@ def user_home(uuid):
     poll_texts = [poll.poll_text for poll in polls]
     poll_images = [poll.image_path for poll in polls]
     poll_dates = [poll.post_date for poll in polls]
-    poll_uuid = [poll.poll_uuid for poll in polls]
+    poll_uuids = [poll.poll_uuid for poll in polls]
 
-    ##### edit here #######
-
-    # get current user tag
-    poll_r = Poll.query.filter(Poll.uuid == uuid).order_by(desc(Poll.post_date)).limit(1) 
-    poll_tag = poll_r[0].model_tag
-    list_tags = [elm for elm in poll_tag[1:-1].split(",")]
-    current_tag = list_tags[0]
+    ##### edit here ######
 
     # get poll text for other users
-    others_poll = Poll.query.filter(and_(Poll.uuid != uuid,(Poll.post_date + timedelta(days=4)) > datetime.now()))
-    poll_r_texts = [poll.poll_text for poll in others_poll]
-    poll_r_images = [poll.image_path for poll in others_poll]
-    poll_r_dates = [poll.post_date for poll in others_poll]
-    poll_r_uuid = [poll.poll_uuid for poll in others_poll]
+    other_polls = Poll.query.filter(and_(Poll.uuid != uuid, (Poll.post_date + timedelta(days=4)) > datetime.now()))
+    poll_o_uuids = [poll.poll_uuid for poll in other_polls]
 
-    # get score for all the polls collected above
-    score = []
-    for txt, img, dt, uid in zip(poll_r_texts, poll_r_images, poll_r_dates, poll_r_uuid):
-        val = requests.post(url,
-        headers=headers,
-        params={
-            "text1": current_tag,
-            "text2": txt
-        })
-        score.append((json.loads(val.text)['similarity'], txt, img, dt, uid))
+    poll_r_uuids_lst = [poll.recommend_polls for poll in polls]
+    poll_r_set = set(itertools.chain(*poll_r_uuids_lst))
+    if len(poll_r_set) >= 5:
+        poll_r_uuids = list(random.sample(poll_r_set, 5))
+    else:
+        poll_r_uuids = []
 
-    #sorted_polls = 
-    score.sort(key=lambda r:r[0], reverse=True)
-    top_5 = score[:5]
-    # return render_template("demo_score.html", score=top_5)
-
-
-    # polls_r = Poll.query.filter(Poll.uuid != uuid).order_by(desc(Poll.post_date)).limit(10)
-    poll_r_texts = [poll[1] for poll in top_5]
-    poll_r_images = [poll[2] for poll in top_5]
-    poll_r_dates = [poll[3] for poll in top_5]
-    poll_r_uuid = [poll[4] for poll in top_5]
+    other_polls = list(other_polls)
+    if len(other_polls) >= 5:
+        random_5_polls = random.sample(other_polls, 5)
+    else:
+        random_5_polls = []
+ 
+    poll_r_texts = [poll.poll_text for poll in random_5_polls]
+    poll_r_images = [poll.image_path for poll in random_5_polls]
+    poll_r_dates = [poll.post_date for poll in random_5_polls]
+    
+    if not poll_r_uuids and len(poll_o_uuids) >= 5:
+        poll_r_uuids = list(random.sample(poll_o_uuids, 5))
 
     return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, 
-                           poll_dates=poll_dates, poll_uuid=poll_uuid, poll_r_texts=poll_r_texts, 
-                           poll_r_images=poll_r_images, poll_r_dates=poll_r_dates, poll_r_uuid=poll_r_uuid)
+                           poll_dates=poll_dates, poll_uuid=poll_uuids, poll_r_texts=poll_r_texts, 
+                           poll_r_images=poll_r_images, poll_r_dates=poll_r_dates, poll_r_uuid=poll_r_uuids)
+    # return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, 
+    #                        poll_dates=poll_dates, poll_uuid=poll_uuids, poll_r_texts=poll_texts, 
+    #                        poll_r_images=poll_images, poll_r_dates=poll_dates, poll_r_uuid=poll_uuids)
 
 
 @users_blueprint.route("/login", methods=["GET", "POST"])

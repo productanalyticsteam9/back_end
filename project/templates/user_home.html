@@ -23,15 +23,15 @@
 
 {% block body %}
 <section class="menu cid-qTkzRZLJNu" once="menu" id="head">
-  <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm" style="background-color:#563d7c">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <div class="hamburger">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-          </div>
-      </button>
+<nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm" style="background-color:#563d7c">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+    </div>
+  </button>
       <div class="menu-logo">
           <div class="navbar-brand">
               <span class="navbar-logo">
@@ -60,117 +60,105 @@
                   </a>
               </li>
           </ul>
-
       </div>
-  </nav>
+</nav>
 </section>
-
-<style>
-.card-img-top.img-thumbnail{
-  padding:2.5px
-}
-</style>
 
 <div class="card border-0 bg-light text-white">
   <img class='card-img-top img-rounded' src="../static/img/user_home_bg9.jpg" >
   <div class='card-img-top-overlay'>
-
-
 <div class="card border-0" style="background-color: #f7f7f9; color:#656765;">
-  <div class="container-fluid">
-    <h2 class="text-center my-3">Poll History</h2>
-    <div class="carousel slide myCarousel" data-ride="carousel">
-    <!-- <div id="myCarousel1"> -->
-      <div class="carousel-inner row w-100 mx-auto">
+<div class="container-fluid">
+  <h2 class="text-center my-3">Poll History</h2>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- <div id="myCarousel1"> -->
+    <div class="carousel-inner row w-100 mx-auto">
 
         {% for text in poll_texts %}
-          <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-            <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #f7f7f9;">
-              <div class="card-body">
-                <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
-                <p class="card-text">{{ text }}</p>
-                <div class="row">
-                  {% for path in poll_images[loop.index0] %}
-                      <div class="col">
-                        <img class="card-img-top img-thumbnail border-0" style="height:200px; width:220px" src="{{ path }}" alt="poll image">
-                      </div>
-                  {% endfor %}
-                </div>
-                <div class="card-footer text-center border-0" style="background-color: #f7f7f9;">
-                    <!-- <div class='col-md-6 col-xs-6 col1 center-block'> -->
-                        <a class="btn btn-sm" style="height:20px; width:150px; background-color:#563d7c; color:white;"  href="{{ '../poll_vote/' + poll_uuid[loop.index0] }} " role="button">see result</a>
-                    <!-- </div> -->
-                </div>
-                  <small class="text" style="color:#656765;">{{ poll_dates[loop.index0] | datetimeformat }}</small>
+        <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
+          <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #f7f7f9;">
+            <div class="card-body">
+              <p class="card-text">{{ text }}</p>
+              <div class="row">
+                {% for path in poll_images[loop.index0] %}
+                    <div class="col">
+                      <img class="card-img-top img-thumbnail border-0" style="height:200px; width:220px" src="{{ path }}" alt="poll image">
+                    </div>
+                {% endfor %}
               </div>
+              <div class="card-footer text-center border-0" style="background-color: #f7f7f9;">
+                  <!-- <div class='col-md-6 col-xs-6 col1 center-block'> -->
+                    <a class="btn btn-sm" style="height:20px; width:150px; background-color:#563d7c; color:white;"  href="{{ '../poll_vote/' + poll_uuid[loop.index0] }} " role="button">see result</a>
+                  <!-- </div> -->
+              </div>
+                <small class="text" style="color:#656765;">{{ poll_dates[loop.index0] | datetimeformat }}</small>
             </div>
           </div>
-        {% endfor %}
+        </div>
+      {% endfor %}
 
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center mt-4">
-            <a class="btn btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
-              <i class="fa fa-lg fa-chevron-left" style="color:#656765"></i>
-            </a>
-            <a class="btn btn-sm mx-1 next" href="javascript:void(0)" title="Next">
-              <i class="fa fa-lg fa-chevron-right" style="color:#656765"></i>
-            </a>
-          </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mt-4">
+          <a class="btn btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
+            <i class="fa fa-lg fa-chevron-left" style="color:#656765"></i>
+          </a>
+          <a class="btn btn-sm mx-1 next" href="javascript:void(0)" title="Next">
+            <i class="fa fa-lg fa-chevron-right" style="color:#656765"></i>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </div>
-
+</div>
 
 <div class="card border-0" style="background-color: #eee6ee; color:#656765;">
-  <div class="container-fluid">
-    <h2 class="text-center my-3">Poll Recommendation</h2>
-    <div class="carousel slide myCarousel" data-ride="carousel">
-    <!-- <div id="myCarousel1"> -->
-      <div class="carousel-inner row w-100 mx-auto">
-
-        {% for text_r in poll_r_texts %}
-          <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
-            <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #eee6ee;">
-              <div class="card-body">
-                <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
-                <p class="card-text">{{ text_r }}</p>
-                <div class="row">
-                  {% for path_r in poll_r_images[loop.index0] %}
-                      <div class="col">
-                        <img class="card-img-top img-thumbnail border-0" style="height:200px; width:220px" src="{{ path_r }}" alt="poll image">
-                      </div>
-                  {% endfor %}
-                 
+   <div class="container-fluid">
+      <h2 class="text-center my-3">Poll Recommendation</h2>
+       <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner row w-100 mx-auto">
+      
+            {% for text_r in poll_r_texts %}
+            <div class="carousel-item col-md-4 {% if loop.index==1 %}active{% endif %}">
+              <div class="card border-0" style="width: 25rem; height: 23rem; background-color: #eee6ee;">
+                <div class="card-body">
+                  <!-- <h4 class="card-title">Poll {{ loop.index }}</h4> -->
+                  <p class="card-text">{{ text_r }}</p>
+                  <div class="row">
+                    {% for path_r in poll_r_images[loop.index0] %}
+                        <div class="col">
+                          <img class="card-img-top img-thumbnail border-0" style="height:200px; width:220px" src="{{ path_r }}" alt="poll image">
+                        </div>
+                    {% endfor %}
+                   
+                  </div>
+                  <div class="card-footer text-center border-0" style="background-color: #eee6ee;">
+                      <a class="btn btn-sm"  style="height:20px; width:150px; background-color: #563d7c; color: white;" href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }} " role="button">check it out</a>
+                  </div>
+                    <small class="text" style="color:#656765;">{{ poll_r_dates[loop.index0] | datetimeformat }}</small>
                 </div>
-                <div class="card-footer text-center border-0" style="background-color: #eee6ee;">
-                    <a class="btn btn-sm"  style="height:20px; width:150px; background-color: #563d7c; color: white;" href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }} " role="button">check it out</a>
-                </div>
-                  <small class="text" style="color:#656765;">{{ poll_r_dates[loop.index0] | datetimeformat }}</small>
               </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
 
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center mt-4">
-            <a class="btn btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
-              <i class="fa fa-lg fa-chevron-left" style="color:#656765;"></i>
-            </a>
-            <a class="btn btn-sm mx-1 next" href="javascript:void(0)" title="Next">
-              <i class="fa fa-lg fa-chevron-right" style="color:#656765;"></i>
-            </a>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center mt-4">
+              <a class="btn btn-sm mx-1 prev" href="javascript:void(0)" title="Previous">
+                <i class="fa fa-lg fa-chevron-left" style="color:#656765;"></i>
+              </a>
+              <a class="btn btn-sm mx-1 next" href="javascript:void(0)" title="Next">
+                <i class="fa fa-lg fa-chevron-right" style="color:#656765;"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
   <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
   <script src='https://unpkg.com/popper.js@1.12.9/dist/umd/popper.js'></script>

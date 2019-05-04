@@ -20,7 +20,6 @@ def split_func(a):
 @login_required
 def poll_vote_result(poll_uuid):
     poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
-    print(poll.vote_cnt)
     poll_usertags = split_func(poll.user_tag)
     poll_modeltags = split_func(poll.model_tag)
 
@@ -88,10 +87,11 @@ def submit_poll():
                     user_tag = re.findall(r"\b\w+\b", form.user_tag.data)
                 else:
                     user_tag = []
-
+                
                 poll = Poll(poll_text=poll_text, poll_uuid=poll_uuid, uuid=uuid,
                             image_id=image_id, image_path=image_path, user_tag=user_tag,
-                            model_tag=model_tags, vote_cnt=[0]*len(image_path))
+                            model_tag=model_tags, vote_cnt=[0]*len(image_path), 
+                            recommend_polls=[])
                 poll.user_tag = user_tag
                 poll.model_tag = model_tags
                 db.session.add(poll)
