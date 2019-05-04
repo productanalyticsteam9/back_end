@@ -90,8 +90,7 @@ def submit_poll():
                 
                 poll = Poll(poll_text=poll_text, poll_uuid=poll_uuid, uuid=uuid,
                             image_id=image_id, image_path=image_path, user_tag=user_tag,
-                            model_tag=model_tags, vote_cnt=[0]*len(image_path), 
-                            recommend_polls=[])
+                            model_tag=model_tags, vote_cnt=[0]*len(image_path))
                 poll.user_tag = user_tag
                 poll.model_tag = model_tags
                 db.session.add(poll)

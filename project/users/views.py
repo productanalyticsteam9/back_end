@@ -1,14 +1,14 @@
-from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint, Response, send_file
+from flask import render_template, flash, redirect, url_for, session, logging, request, Blueprint, Response
 from flask_login import login_user, current_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime, timedelta
 from uuid import uuid4
-from sqlalchemy import desc, and_
+from sqlalchemy import and_
 import requests
 import json, random, itertools
 
 from .. import app, db
-from ..models import User, Poll
+from ..models import User, Poll, Rec_Poll
 from .forms import RegisterForm, LoginForm, UploadForm
 from ..upload_to_s3.helper import upload_file_to_s3, generate_file_url
 from ..upload_to_s3.config import S3_BUCKET
@@ -17,12 +17,6 @@ from werkzeug.utils import secure_filename
 
 
 users_blueprint = Blueprint('users', __name__)
-
-url = 'https://api.twinword.com/api/v6/text/similarity/'
-api_key = 'k7kQf//ESLjGcf7zIeEEC4jbt95/fg013oIjftRJxZ23dIFDFX3v3dZRh5cI7TdZlERbj5+m6WDrUUq2fwfgiA=='
-headers={ "Content-Type": "application/json", 
-            "Host": "api.twinword.com",
-            "X-Twaip-Key" : api_key}
 
 @users_blueprint.route("/")
 def index():
@@ -44,31 +38,20 @@ def user_home(uuid):
     poll_dates = [poll.post_date for poll in polls]
     poll_uuids = [poll.poll_uuid for poll in polls]
 
-    ##### edit here ######
+    rec_polls = Rec_Poll.query.filter_by(uuid=uuid)
 
-    # get poll text for other users
-    other_polls = Poll.query.filter(and_(Poll.uuid != uuid, (Poll.post_date + timedelta(days=4)) > datetime.now()))
-    poll_o_uuids = [poll.poll_uuid for poll in other_polls]
+    # retrieve the recommended polls
+    poll_r_texts = []
+    poll_r_images = []
+    poll_r_dates = []
+    poll_r_uuids = []
 
-    poll_r_uuids_lst = [poll.recommend_polls for poll in polls]
-    poll_r_set = set(itertools.chain(*poll_r_uuids_lst))
-    if len(poll_r_set) >= 5:
-        poll_r_uuids = list(random.sample(poll_r_set, 5))
-    else:
-        poll_r_uuids = []
-
-    other_polls = list(other_polls)
-    if len(other_polls) >= 5:
-        random_5_polls = random.sample(other_polls, 5)
-    else:
-        random_5_polls = []
- 
-    poll_r_texts = [poll.poll_text for poll in random_5_polls]
-    poll_r_images = [poll.image_path for poll in random_5_polls]
-    poll_r_dates = [poll.post_date for poll in random_5_polls]
-    
-    if not poll_r_uuids and len(poll_o_uuids) >= 5:
-        poll_r_uuids = list(random.sample(poll_o_uuids, 5))
+    for poll_uuid in rec_polls:
+        poll = Poll.query.filter(and_(uuid=uuid, poll_uuid=poll_uuid))
+        poll_r_texts.append(poll.poll_text)
+        poll_r_images.append(poll.image_path)
+        poll_r_dates.append(poll.post_date)
+        poll_r_uuids.append(poll.poll_uuid)
 
     return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, 
                            poll_dates=poll_dates, poll_uuid=poll_uuids, poll_r_texts=poll_r_texts, 
