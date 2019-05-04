@@ -73,9 +73,6 @@ def user_home(uuid):
     return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, 
                            poll_dates=poll_dates, poll_uuid=poll_uuids, poll_r_texts=poll_r_texts, 
                            poll_r_images=poll_r_images, poll_r_dates=poll_r_dates, poll_r_uuid=poll_r_uuids)
-    # return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, 
-    #                        poll_dates=poll_dates, poll_uuid=poll_uuids, poll_r_texts=poll_texts, 
-    #                        poll_r_images=poll_images, poll_r_dates=poll_dates, poll_r_uuid=poll_uuids)
 
 
 @users_blueprint.route("/login", methods=["GET", "POST"])
@@ -117,10 +114,8 @@ def register():
                 country_code = form.country.data
                 browser = request.user_agent.browser
 
-                # check_uname = User.query.filter_by(username=uname).first()
                 user_count = User.query.filter_by(username=uname).count() + \
                              User.query.filter_by(email=mail).count()
-                # if check_uname is not None:
                 if user_count > 0:
                     flash("Sorry, username ({}) or email ({}) already exists.".format(uname, mail), 'error')
                 else:
