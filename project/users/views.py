@@ -43,7 +43,9 @@ def user_home(uuid):
     poll_r_dates = []
     poll_r_uuids = []
 
-    if polls:
+    rec_user = Rec_Poll.query.filter_by(uuid=uuid).first()
+
+    if polls and rec_user:
         # recommend based on user poll history
         rec_polls = Rec_Poll.query.filter_by(uuid=uuid).first().recommend_polls
     else:
