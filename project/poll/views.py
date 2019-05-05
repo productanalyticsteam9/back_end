@@ -41,17 +41,29 @@ def upvote(poll_uuid, image_id):
     try:
         poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
         voted = Voted_Poll.query.filter_by(uuid=current_user.uuid).first()
-        voted_polls = voted.voted_polls
-        if poll.poll_uuid not in voted_polls:
+        if voted:
+            voted_polls = voted.voted_polls
+            if poll.poll_uuid not in voted_polls:
+                votes = poll.vote_cnt
+                votes[int(image_id)-1] += 1
+                voted_polls.append(poll_uuid)
+                db.session.query(Poll).filter_by(poll_uuid=poll_uuid).update({Poll.vote_cnt: votes})
+                db.session.query(Voted_Poll).filter_by(uuid=current_user.uuid).update({Voted_Poll.voted_polls: voted_polls})
+                db.session.commit()
+                flash("Thank you for voting!", 'success')
+            else:
+                flash("You have voted, thank you for participating.", "success")
+        else:
+            # newly registered user's vote
+            voted_polls = []
             votes = poll.vote_cnt
             votes[int(image_id)-1] += 1
-            voted_polls.append(poll.poll_uuid)
+            voted_polls.append(poll_uuid)
             db.session.query(Poll).filter_by(poll_uuid=poll_uuid).update({Poll.vote_cnt: votes})
-            db.session.query(Voted_Poll).filter_by(uuid=current_user.uuid).update({Voted_Poll.voted_polls: voted_polls})
+            voted_poll = Voted_Poll(uuid=current_user.uuid, voted_polls=voted_polls)
+            db.session.add(voted_poll)
             db.session.commit()
             flash("Thank you for voting!", 'success')
-        else:
-            flash("You have voted, thank you for participating.", "success")
     except Exception as e:
         db.session.rollback()
         flash(e, 'error')

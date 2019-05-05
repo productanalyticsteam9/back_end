@@ -8,7 +8,7 @@ import requests
 import json, random, itertools
 
 from .. import app, db
-from ..models import User, Poll, Rec_Poll
+from ..models import User, Poll, Rec_Poll, Voted_Poll
 from .forms import RegisterForm, LoginForm, UploadForm
 from ..upload_to_s3.helper import upload_file_to_s3, generate_file_url
 from ..upload_to_s3.config import S3_BUCKET
@@ -38,20 +38,26 @@ def user_home(uuid):
     poll_dates = [poll.post_date for poll in polls]
     poll_uuids = [poll.poll_uuid for poll in polls]
 
-    rec_polls = Rec_Poll.query.filter_by(uuid=uuid).first()
-
-    # retrieve the recommended polls
     poll_r_texts = []
     poll_r_images = []
     poll_r_dates = []
     poll_r_uuids = []
 
-    for poll_uuid in rec_polls.recommend_polls:
-        poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
-        poll_r_texts.append(poll.poll_text)
-        poll_r_images.append(poll.image_path)
-        poll_r_dates.append(poll.post_date)
-        poll_r_uuids.append(poll.poll_uuid)
+    if polls:
+        # recommend based on user poll history
+        rec_polls = Rec_Poll.query.filter_by(uuid=uuid).first().recommend_polls
+    else:
+        # cold-start, recommend random polls
+        all_current_polls = Poll.query.with_entities(Poll.poll_uuid).all()
+        rec_polls = [p[0] for p in random.sample(all_current_polls, 5)]
+
+    # retrieve the recommended polls
+    for poll_uuid in rec_polls:
+            poll = Poll.query.filter_by(poll_uuid=poll_uuid).first()
+            poll_r_texts.append(poll.poll_text)
+            poll_r_images.append(poll.image_path)
+            poll_r_dates.append(poll.post_date)
+            poll_r_uuids.append(poll.poll_uuid)   
 
     return render_template("user_home.html", poll_texts=poll_texts, poll_images=poll_images, 
                            poll_dates=poll_dates, poll_uuid=poll_uuids, poll_r_texts=poll_r_texts, 
