@@ -79,9 +79,6 @@ def submit_poll():
     if 'file_urls' not in session or session['file_urls'] == []:
         return redirect(url_for('users.upload'))
     file_urls = session['file_urls']
-    poll_uuid = session['poll_uuid']
-    session.pop('file_urls', None)
-    session.pop('poll_uuid', None)
 
     model_tag_lst = []
     client = boto3.client('rekognition') # ML model client
@@ -98,7 +95,7 @@ def submit_poll():
         if form.validate_on_submit():
             try:
                 poll_text = form.poll_text.data
-                
+                poll_uuid = session['poll_uuid']
                 uuid = user.uuid
                 id_name_dict, cnt = {}, 1
                 for url in file_urls:
@@ -126,6 +123,8 @@ def submit_poll():
                 poll.model_tag = model_tags
                 db.session.add(poll)
                 db.session.commit()
+                session.pop('file_urls', None)
+                session.pop('poll_uuid', None)
                 flash("Thank you for submitting your poll!", 'success')
             except Exception as e:
                 db.session.rollback()

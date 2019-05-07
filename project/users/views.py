@@ -148,9 +148,7 @@ def logout():
 def upload():
     user = current_user
     form = UploadForm()
-    if "file_urls" not in session:
-        session['file_urls'] = []
-    file_urls = session['file_urls']
+    file_urls = []
     poll_uuid = uuid4()
     if request.method == 'POST':
         if form.validate_on_submit() and request.files:
