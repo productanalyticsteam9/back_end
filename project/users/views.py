@@ -50,7 +50,7 @@ def user_home(uuid):
         rec_polls = Rec_Poll.query.filter_by(uuid=uuid).first().recommend_polls
     else:
         # cold-start, recommend random polls
-        all_current_polls = Poll.query.with_entities(Poll.poll_uuid).all()
+        all_current_polls = Poll.query.filter(Poll.uuid!=uuid).with_entities(Poll.poll_uuid).all()
         rec_polls = [p[0] for p in random.sample(all_current_polls, 5)]
 
     # retrieve the recommended polls

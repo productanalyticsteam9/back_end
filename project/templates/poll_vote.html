@@ -42,15 +42,6 @@
                     <span></span>
                 </div>
             </button>
-<!--             <div class="menu-logo">
-                <div class="navbar-brand">
-                    <span class="navbar-logo">
-                        <a href="/">
-                            <img src="../static/assets/images/logo.png" style="height: 3.6rem;">
-                        </a>
-                    </span>
-                </div>
-            </div> -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
                     <li class="nav-item">
@@ -75,15 +66,40 @@
         </nav>
 </section>
 
-<!--     <nav class="navbar navbar-expand">
-        <form class="form-inline">
-            <i class="fas fa-search" aria-hidden="true"></i>
-        </form>               
-    </nav> -->
     <div class="card bg-light border-0" style="color:#563d7c">
       <img class='card-img-top img-rounded' src="../static/img/vote_bg3.jpg" >
       <div class='card-img-overlay'>
 
+        <br />
+        <div class="container">
+            <div class="content">
+                <!-- flash messages-->
+                {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+                <div class="alert alert-danger alert-dismissible" role="alert">{{ error_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+        
+                {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+                <div class="alert alert-success alert-dismissible" role="alert">{{ success_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+        
+                {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+                <div class="alert alert-info alert-admissible" role="alert">{{ info_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    
             <div class="container-fluid">
                 <div class="row justify-content-center mt-4" >
                     <h2>{{ poll_text }}</h2>
@@ -119,21 +135,6 @@
                     {% endfor %}
                 </div>
 
-                <!--                 
-                <div class="row justify-content-center mt-4">
-                    <span class="input-group-text badge-secondary mr-2">User Tag</span>
-                    {% for tag in poll_usertags %}
-                        <span class="input-group-text badge-light mr-2">{{ tag }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="row justify-content-center mt-4">
-                    <span class="input-group-text badge-secondary mr-2">Model Tag</span>
-                    {% for tag in poll_modeltags %}
-                        <span class="input-group-text badge-light mr-2">{{ tag }}</span>
-                    {% endfor %}
-                </div> -->
-
                 <div class="row justify-content-center mt-4">
                     <h6><span class="input-group-text badge-secondary border-0 mr-2">Tags</span></h6>
                     {% for tag in poll_usertags %}
@@ -143,37 +144,6 @@
                         <h6><span class="input-group-text badge-light border-0 mr-2">{{ tag }}</span></h6>
                     {% endfor %}
                 </div>
-
-        </div>
-
-        <br />
-        <div class="container">
-            <div class="content">
-                <!-- flash messages-->
-                {% for error_message in get_flashed_messages(category_filter=["error"]) %}
-                <div class="alert alert-danger alert-dismissible" role="alert">{{ error_message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-        
-                {% for success_message in get_flashed_messages(category_filter=["success"]) %}
-                <div class="alert alert-success alert-dismissible" role="alert">{{ success_message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-        
-                {% for info_message in get_flashed_messages(category_filter=["info"]) %}
-                <div class="alert alert-info alert-admissible" role="alert">{{ info_message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-            </div>
         </div>
     </div>
 
