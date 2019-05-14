@@ -19,6 +19,9 @@
   <link rel="stylesheet" href="../static/assets/dropdown/css/style.css">
   <link rel="stylesheet" href="../static/assets/mobirise/css/mbr-additional.css" type="text/css">
   <link rel="stylesheet" href="../static/styles/user_home_style.css">
+  
+  {% include 'head.html' %}
+
 {% endblock %}
 
 {% block body %}
@@ -161,7 +164,7 @@
                   {% endfor %}
                 </div>
                 <div class="card-footer text-center border-0" style="background-color: white;">
-                    <a class="btn btn-sm" style="height:20px; width:150px; background-color:#563d7c; color:white;"  href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }}" role="button">check it out</a>
+                    <a class="btn btn-sm" style="height:20px; width:150px; background-color:#563d7c; color:white;"  href="{{ '../poll_vote/' + poll_r_uuid[loop.index0] }}" role="button" onclick="gtag('event', 'click', {'event_category':'button', 'event_label':'check_recommendation', 'value':10});">check it out</a>
                 </div>
                   <small class="text" style="color:#656765;">{{ poll_r_dates[loop.index0] | datetimeformat }}</small>
               </div>

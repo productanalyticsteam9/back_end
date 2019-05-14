@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="../static/assets/mobirise/css/mbr-additional.css" type="text/css">
 <link rel="shortcut icon" type="/image/png" href="{{ url_for('static',filename='img/logo.png') }}" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/upload_style.css') }}">
+
+{% include 'head.html' %}
+
 {% endblock %}
 
 {% block body %}
@@ -86,7 +89,7 @@
                     <td>{{ f.key | file_type }}</td>
                     <td class="td-buttons">
                         <a href="/download/{{ f.key }}">
-                            <button type="submit" class="btn btn-default btn-sm">
+                            <button type="submit" class="btn btn-default btn-sm" onclick="gtag('event', 'click', {'event_category':'button', 'event_label':'download_button', 'value':1});">
                                 <i class="fa fa-download"></i>
                             </button>
                         </a>
